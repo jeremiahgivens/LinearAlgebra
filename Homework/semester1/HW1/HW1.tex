@@ -1,0 +1,180 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Linear Algebra}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 1}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+\proofpart{(a)}{} The skew symmetric matrices form a subspace of $M_{n \times n} (\mathbb{R})$.
+\proofpart{(b)}{} If $W$ denotes the subspace of symmetric matrices, and $W_-$ denotes the subspace of antisymmetric matrices, then $M_{n \times n} (\mathbb{R}) = W + W_-$ and $W \cap W_- = \{0\}$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(a)}{} Since each entry of the zero matrix is zero, we have $0_{ij} = -0_{ji}$, and can conclude that the zero matrix is skew symmetric. Now, let $w, x \in M_{n \times n} (\mathbb{R})$ be skew symmetric. Then, for $1 \leq i,j \leq n$,
+\begin{align*}
+(w + x)_{ji} &= w_{ji} + x_{ji} &&\text{Basic property of matrix addition}\\
+&= -w_{ij} - x_{ij} &&\text{Both vectors are skew symmetric}\\
+&= -(w + x)_{ij},
+\end{align*}
+and we have shown that $w + x$ is skew symmetric.
+
+Finally, let $a \in \mathbb{R}$ and $v \in M_{n \times n} (\mathbb{R})$ be skew symmetric. For $1 \leq i,j \leq n$, we have
+\begin{align*}
+(ax)_{ji} &= a (x_{ji})\\
+&= a (-x_{ij}) &&x \text{ is skew symmetric}\\
+&= -(ax)_{ij},
+\end{align*}
+and we have proven that $ax$ is skew symmetric. With this, we have proven that the subset of skew symmetric matrices forms a subspace.
+
+\proofpart{(b)}{} Let $v \in M_{n \times n} (\mathbb{R})$. Define $w, x \in M_{n \times n} (\mathbb{R})$ by 
+\begin{align*}
+w_{ij} = \frac{1}{2}(v_{ij} - v_{ji}) \text{, and } x_{ij} = \frac{1}{2}(v_{ij} + v_{ji})
+\end{align*}
+for $1 \leq i,j \leq n$. Then, we have 
+\begin{align*}
+w_{ji} &= \frac{1}{2}(v_{ji} - v_{ij}) \\
+&= - \frac{1}{2}(v_{ij} - v_{ji})\\
+&= - w_{ij}\text{,}
+\end{align*}
+and we have that $w \in W_-$. Similarly,
+\begin{align*}
+x_{ji} &= \frac{1}{2}(v_{ji} + v_{ij})\\
+&= \frac{1}{2}(v_{ij} + v_{ji})\\
+&= x_{ij},
+\end{align*}
+and we have shown that $x \in W$. 
+
+From the definition of $x$ and $w$, we have 
+\begin{align*}
+w_{ij} + x_{ij} &= \frac{1}{2}(v_{ij} - v_{ji}) + \frac{1}{2}(v_{ij} + v_{ji})\\
+&= v_{ij},
+\end{align*}
+and we can conclude that $v = w + x$. Since $v$ was arbitrary, we have shown any $W + W_- = V$.
+
+Finally, we have
+\begin{align*}
+v \in W \cap W_- &\implies (\forall 1 \leq i, j \leq n)(v_{ij} = v_{ji} \land v_{ij} = -v_{ji})\\
+&\implies (\forall 1 \leq i, j \leq n)(v_{ij} = 0)\\
+&\implies v = 0.
+\end{align*}
+Thus, we have shown $W \cap W_- = \{0\}$, and our proof is complete.
+\end{proof}
+
+\section*{Problem 2}
+\begin{theorem}
+Let $T$ be an invertible linear transformation $T:V \to W$, and let $\mathcal{B} = \{v_1, v_2, ..., v_n \}$ be a basis for $V$. Then $\{T(v_1), T(v_2),..., T(v_n) \}$ is a basis for $W$.  
+\end{theorem}
+\subsection*{Solution}
+\begin{proof}
+For this proof, we will show that $\{T(v_1), T(v_2),..., T(v_n) \}$ spans $V$ and is linearly independent. Let $w \in W$. Then, since $T$ is invertible, it is surjective, which implies there exists a $v \in V$ such that $T(v) = w$. Since $\mathcal{B}$ is a basis of $V$, there exist $a_i \in \mathbb{F}$ for $1 \leq i \leq n$ such that 
+\begin{align*}
+v = \sum_{i = 1}^n a_iv_i.
+\end{align*}
+Then, using the fact that $T$ is linear, we have
+\begin{align*}
+w &= T(v)\\
+&= T \left( \sum_{i = 1}^n a_i v_i \right)\\
+&= \sum_{i = 1}^n T(a_iv_i)\\
+&= \sum_{i = 1}^n a_i T(v_i),
+\end{align*}
+and we have shown that $\{T(v_1), T(v_2),..., T(v_n) \}$ spans $V$. 
+
+Finally, let $a_i \in \mathbb{F}$ for $1 \leq i \leq n$, be such that 
+\begin{align}
+\sum_{i = 1}^n a_i T(v_i) &= 0.
+\end{align}
+Then, we have
+\begin{align*}
+0 &= \sum_{i = 1}^n a_i T(v_i)\\
+&= \sum_{i = 1}^n T(a_iv_i)\\
+&= T \left( \sum_{i = 1}^n a_i v_i \right).
+\end{align*}
+By linearity of $T$, $T(0) = 0$. Furthermore, since $T$ is injective (as a result of invertibility), we can conclude 
+\begin{align*}
+\sum_{i = 1}^n a_i v_i = 0.
+\end{align*}
+By linear independence of $\mathcal{B}$, we have $a_i = 0$ for all $i$. Thus, the only solution to (1) is the trivial one, implying that $\{T(v_1), T(v_2),..., T(v_n) \}$ is linearly independent. With this, our proof is complete.
+\end{proof}
+
+\end{document}
