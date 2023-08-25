@@ -126,4 +126,86 @@ Since vector addition is defined element wise, it follows immediately that
 and our proof is complete.
 \end{proof}
 
+\section*{Problem 2}
+Calculate the determinant of the following matrix whose entries are in $\mathbb{C}$:
+\begin{align*}
+\begin{bmatrix}
+i & 2 + i & 0\\
+-1 & 3 & i\\
+0 & -1 & 1-i
+\end{bmatrix}
+\end{align*}
+
+\subsection*{Solution}
+Proceeding with cofactor expansion on the first row, we have
+\begin{align*}
+\begin{vmatrix}
+i & 2 + i & 0\\
+-1 & 3 & i\\
+0 & -1 & 1-i
+\end{vmatrix}
+&= i \begin{vmatrix}
+3 & i\\
+-1 & 1-i
+\end{vmatrix} - 
+(2+i)\begin{vmatrix}
+-1 & i\\
+0 & 1-i
+\end{vmatrix}\\
+&= i (3 - 3i + i) - (2 + i)(i - 1)\\
+&= 3i + 2 + (2 + i)(1 - i)\\
+&= 3i + 2 + 2 + i - 2i + 1\\
+&= 5 + 2i
+\end{align*}
+
+\section*{Problem 3}
+\begin{theorem}
+Let $T$ be a linear operator on a vector space $V$ over the field $\mathbb{F}$, and let $g(t)$ be a polynomial with coefficients from $\mathbb{F}$. Define $g(T)$ to be the operator obtained by plugging $T$ in for the variable $t$, and letting the constant term $a_0$ be replaced with $a_0 I$, where $I$ is the identity operator on $V$. Then, 
+\proofpart{(a)}{} If $v \in V$ is an eigenvector of $T$ with eigenvalue $\lambda$, then $g(T)(v) = g(\lambda) v$.
+\proofpart{(b)}{} If $g(t)$ is the characteristic polynomial of $T$, then $g(T)(v) = 0$.
+\end{theorem}
+
+\subsection*{Solution}
+\proofpart{(a)}{} We have
+\begin{align*}
+g(T)(v) &= \left( \sum_{i = 0} a_0 I T^i \right) (v)\\
+&= \sum_{i = 0} a_0 I T^i (v)\\
+&= \sum_{i = 0} a_0 \lambda^i v\\
+&= \left( \sum_{i = 0} a_0 \lambda^i \right) (v)\\
+&= g(\lambda) v,
+\end{align*}
+as desired.
+
+\proofpart{(b)}{} Now suppose $g(t)$ is the characteristic polynomial of $T$. Then, if $v$ is an eigen vector of $T$ with eigenvalue $\lambda$, we have
+\begin{align*}
+g(T)(v) &= g(\lambda) v &&\text{by Part (a)}\\
+&= (0)v,
+\end{align*}
+with the last equality being true because the eigenvalues of $T$ are the roots to the characteristic polynomial of $T$.
+
+\section*{Problem 4}
+\begin{theorem}
+Let $A$ be an $n \times n$ matrix with characteristic polynomial
+\begin{align*}
+f(\lambda) = (-1)^n \lambda^n + a_{n-1} \lambda^{n-1} + \dots + a_1 \lambda + a_0.
+\end{align*}
+Then, $f(0) = a_0 = \text{det}(A)$, and we can deduce that $\text{det}(A)$ is invertible if and only if $a_0 \not = 0$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+We have
+\begin{align*}
+f(\lambda) = \text{det} (A - \lambda I).
+\end{align*}
+Therefore
+\begin{align*}
+f(0) &= \text{det} (A - 0I)\\
+&= \text{det} (A)\\
+&= (-1)^n (0)^n + a_{n-1} (0)^{n-1} + \dots + a_1 (0) + a_0\\
+&= a_0,
+\end{align*}
+as desired. Since $T$ is invertible if and only if it has determinant zero, and we have $a_0 = T$, it follows that $T$ is invertible if and only if $a_0 = 0$.
+\end{proof}
+
 \end{document}
