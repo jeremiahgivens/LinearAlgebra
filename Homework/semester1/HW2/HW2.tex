@@ -1,0 +1,129 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Linear Algebra}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 2}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+Let $B$ be an $(m + 1) \times (n + 1)$ matrix, where $B_{11} = 1$, and $B_{1j} = B_{i1} = 0$ for $2 \leq j \leq n + 1$ and $2 \leq i \leq m + 1$. Define $B'$ to be the $m \times n$ submatrix of $B$ obtained by removing the first column and the first row of $B$. Then, if $\text{rank}(B) = r$, then $\text{rank}(B') = r - 1$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+For this proof, we will use the fact that rank of a matrix is equal to the dimension of its column space. Since the first element of $B_{\cdot 1}$ is non zero, and the first elements of each vector in the set of remaining column vectors $\{B_{\cdot 2}, \dots, B_{\cdot (n + 1)} \}$ are zero, it follows that 
+\begin{align*}
+B_{\cdot 1} \not \in \text{Span}\left( \{B_{\cdot 2}, \dots, B_{\cdot (n + 1)} \} \right).
+\end{align*}
+Thus, we can conclude that 
+\begin{align*}
+\text{dim} \left( \text{Span}\left( \{B_{\cdot 2}, \dots, B_{\cdot (n + 1)} \} \right) \right) &= \text{dim} \left( \text{Span}\left( \{B_{\cdot 1}, \dots, B_{\cdot (n + 1)} \} \right) \right) - 1\\
+&= r - 1.
+\end{align*}
+Now, define $\{v_1, ..., v_{r - 1} \}$ to be the resulting set of reducing  $\{B_{\cdot 2}, \dots, B_{\cdot (n + 1)} \}$ to a basis of $\text{Span}\left( \{B_{\cdot 2}, \dots, B_{\cdot (n + 1)} \} \right)$. Now, define a new set of vectors $\{v'_1, ..., v'_{r - 1} \} \subseteq \{ B'_{\cdot 1}, \dots, B'_{\cdot n} \}$ such that for all $1 \leq i \leq r - 1$, $v'_i$ is the vector obtained by removing the first element of $v_i$. All that remains is to that $\{v'_1, ..., v'_{r - 1} \}$ is a basis of $\text{Span}\left( B'_{\cdot 1}, \dots, B'_{\cdot n} \} \right)$.
+
+To see that $\{v'_1, ..., v'_{r - 1} \}$ is linearly independent, let $\{a_1, \dots, a_{r-1} \} \subseteq \mathbb{F}$ be such that 
+\begin{align*}
+\sum_{i = 1}^{r-1} a_i v'_i = 0.
+\end{align*}
+Then, since the first element of each vector in $\{v_1, ..., v_{r - 1} \}$ is zero, we have
+\begin{align*}
+\sum_{i = 1}^{r-1} a_i v_i = 0.
+\end{align*}
+By linear independence of $\{v_1, ..., v_{r - 1} \}$, we can conclude that $a_i = 0$ for each $i$, and we have shown that $\{v'_1, ..., v'_{r - 1} \}$ is linearly independent.
+
+To end the proof, we must now show that 
+\begin{align*}
+\text{Span}\left( \{v_1, ..., v_{r - 1} \} \right) &= \text{Span}\left( \{B'_{\cdot 1}, \dots, B'_{\cdot n} \} \right).
+\end{align*}
+One side of this equality follows directly from the fact that $\{v'_1, ..., v'_{r - 1} \} \subseteq \{ B'_{\cdot 1}, \dots, B'_{\cdot n} \}$. For the other direction, let $v' \in  \text{Span}\left( \{B'_{\cdot 1}, \dots, B'_{\cdot n} \} \right)$. Define $v \in \text{Span}\left( \{B_{\cdot 2}, \dots, B_{\cdot (n + 1)} \} \right)$ by adding a zero to the top of $v'$. Then, there exist scalars $\{a_1, \dots, a_{r-1} \} \subseteq \mathbb{F}$ such that 
+\begin{align*}
+\sum_{i = 1}^{r-1} a_i v_i = v.
+\end{align*}
+Since vector addition is defined element wise, it follows immediately that 
+\begin{align*}
+\sum_{i = 1}^{r-1} a_i v'_i = v',
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\end{document}
