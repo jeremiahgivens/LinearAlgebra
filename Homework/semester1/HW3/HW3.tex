@@ -110,7 +110,7 @@ $
 $
 
 \subsection*{Solution}
-For each of these matrices, we will begin by finding the eigen values. With these eigen values, we will then find each corresponding eigenspaces. If the sum of the dimensions of these eigenspaces is equal to the dimension of vector space these matrices act on, then we will construct a basis of our vector space consisting of eigenvectors, and use this to find the matrix which diagonlizes our matrix.
+For each of these matrices, we will begin by finding the eigen values. With these eigen values, we will then find each corresponding eigenspace. If the sum of the dimensions of these eigenspaces is equal to the dimension of vector space these matrices act on, then we will construct a basis of our vector space consisting of eigenvectors, and use this to find the matrix which diagonlizes our matrix.
 \proofpart{(a)}{} We have
 \begin{align*}
 \begin{vmatrix}
@@ -348,9 +348,9 @@ Q^{-1} A Q &=
 
 \subsection*{Solution}
 \begin{proof}
-\proofpart{(a)}{} Consider a matrix representing a counter clockwise rotation in $\mathbb{R}^2$ by $0 < \theta < 2 \pi$ radians. This matrix is invertible (inverse matrix rotates by $\theta$ radians clockwise). Now, since the only vector that remains pointing in the same direction after being rotated by $\theta$ radians is the zero vector, we can conclude this matrix has not eigenvectors, and is therefore not diagonlizable.
+\proofpart{(a)}{} Consider a matrix representing a counter clockwise rotation in $\mathbb{R}^2$ by $0 < \theta < 2 \pi$ radians. This matrix is invertible (inverse matrix rotates by $\theta$ radians clockwise). Now, since the only vector that remains pointing in the same direction after being rotated by $\theta$ radians is the zero vector, we can conclude this matrix has no eigenvectors, and is therefore not diagonlizable.
 
-\proofpart{(b)}{} Let $A$ be a matrix in $\mathbb{R}^2$ with eigen values $0$ and $1$. These eigen values are unique, thus the correspond to two eigen vectors that span $\mathbb{R}^2$. However, this means that $A$ has a nonzero vector in it's nullspace, which implies it is not injective (since $A$ is linear), and therefore non-invertible.
+\proofpart{(b)}{} Let $A$ be a matrix in $\mathbb{R}^2$ with eigen values $0$ and $1$. These eigen values are unique, thus the correspond to two linearly independent eigen vectors that span $\mathbb{R}^2$. However, this means that $A$ has a nonzero vector in it's nullspace, which implies it is not injective (since $A$ is linear), and therefore non-invertible.
 \end{proof}
 
 \section*{Problem 3}
@@ -377,7 +377,7 @@ as desired.
 &= |A| &&\text{By Part (a).}
 \end{align*}
 Thus, similar matrices have the same determinant.
-\proofpart{(c)}{} Defining $A$ and $Q$ as before, and let 
+\proofpart{(c)}{} Define $A$ and $Q$ as before, and let 
 \begin{align*}
 B = Q A Q^{-1}.
 \end{align*}
@@ -390,5 +390,30 @@ Then, we have
 &= |A - \lambda I|,
 \end{align*}
 and we have shown that similar matrices have the same characteristic polynomial.
+\end{proof}
+
+\section*{Problem 4}
+\begin{theorem}
+Let $B \in M_{n \times n} (\mathbb{C})$ be an invertible matrix.
+\proofpart{(a)}{} Every matrix $A \in M_{n \times n} (\mathbb{C})$ has an eigenvalue. 
+\proofpart{(a)}{} For any matrix $A \in M_{n \times n} (\mathbb{C})$, there is a number $c \in \mathbb{C}$ such that $\det(A + cB) = 0$. 
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(a)}{} The characteristic polynomial of $A$ is an $n^{\text{th}}$ degree polynomial with complex coefficients. By the Fundamental theorem of algebra, every non-zero, single-variable, degree n polynomial with complex coefficients has, counted with multiplicity, exactly n complex roots. Since the roots of the characteristic polynomial are the eigenvalues of $A$, we are done with the proof of Part (a).
+
+\proofpart{(b)}{} Since $B$ is invertible, it and its inverse have non zero determinants. Thus, we have
+\begin{align*}
+|A + cB| &= \frac{1}{|Q^{-1}|}|(A + cB)B^{-1}|\\
+&= \frac{1}{|Q^{-1}|}|(A + cB)B^{-1}|\\
+&= \frac{1}{|Q^{-1}|}|AB^{-1} + cBB^{-1}|\\
+&= \frac{1}{|Q^{-1}|}|AB^{-1} + cI|.
+\end{align*}
+Letting $\lambda = -c$, we have 
+\begin{align*}
+|A + cB| &= \frac{1}{|Q^{-1}|}|AB^{-1} - \lambda I|,
+\end{align*}
+where $|AB^{-1} - \lambda I|$ is the characteristic polynomial of $AB^{-1}$. By Part (a), this matrix has an eigenvalue, and our proof is complete.
 \end{proof}
 \end{document}
