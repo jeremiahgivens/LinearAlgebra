@@ -1,0 +1,72 @@
+\documentclass[11 pt]{article}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{arrows}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{mathtools}
+
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+
+\DeclareMathOperator\rowspan{Row}
+\DeclareMathOperator\tr{Tr}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclareMathOperator\rank{rank}
+
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+\begin{document}
+\onehalfspacing
+\begin{center}
+\textbf{{\Large Linear Algebra, Fall 2023}\\
+Written Homework 4}\\
+Due: 13 Sep 2023
+\end{center}
+
+\noindent Please answer the following questions on a separate sheet of paper and turn it in.
+
+\begin{enumerate}
+\item Let $A$ be a diagonalizable matrix. Prove that for any positive integer $m$, $A$ and $A^m$ have the same matrix $Q$ which diagonalizes them, and hence, the same basis of eigenvectors.
+
+\item The trace of a matrix is defined to be the sum of the elements along the main diagonal, 
+\[\tr(A) = \sum_i a_{ii}.\]
+    \begin{enumerate}
+    \item Given a complex monic polynomial,
+    \[p(z) = z^n + a_{n-1}z^{n-1} + \cdots + a_1 z + a_0.\] show that $a_{n-1}$ is the sum of the complex roots of $p(z)$.
+    \item Given a complex matrix $A \in M_{n\times n}(\C)$, with characteristic polynomial 
+    \[g(z) = (-1)^n(z^n + a_{n-1}z^{n-1} + \cdots + a_1 z + a_0),\] Show that $-a_{n-1}$ is a sum of the eigenvalues (with multiplicity) of $A$.
+    \item Use the fact that similar matrices have the same characteristic polynomial (you proved this in your last homework) to show that for a diagonalizable complex matrix $A$, 
+    \[\tr(A) = -a_{n-1}.\]
+    \end{enumerate}
+
+\item Hertz Rent-a-Car has a fleet of 2000 cars distributed across three locations in the Huntsville area: 1) Airport, 2) Downtown Huntsville, and 3) Madison Blvd. The movement of cars from one location to another over the course of a week can be described as a Markov process with transition matrix
+\[A = \begin{array}{c|c}
+\text{Rented from:}\\
+    \begin{array}{ccc} \text{Air} &\text{Dtwn} &\text{Mad}\\\hline
+    .90 &.01 &.09\\
+    .01 &.90 &.01\\
+    .09 &.09 &.90
+    \end{array} &\begin{array}{l} \text{Returned to:}\\\hline \text{Air}\\ \text{Dtwn} \\ \text{Mad} \end{array}
+\end{array}\]
+You may use a computer to help with completing these questions.
+    \begin{enumerate}
+    \item Find a diagonalizing matrix $Q$ and diagonal matrix $D$ so that $Q^{-1} A Q = D$
+    \item What are the eigenvalues of the transition matrix?
+    \item Find $\lim_{n \to \infty}A^n$.
+    \item How many cars should be allocated at each location to minimize the numbers of cars which need to be moved from one lot to another at week's end?
+    \end{enumerate}
+\end{enumerate}
+\end{document}

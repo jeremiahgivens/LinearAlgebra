@@ -1,0 +1,305 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Linear Algebra}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 4}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+Let $A$ be a diagonalizable matrix. Then for any positive integer $m$, $A$ and $A^m$ have the same matrix $Q$ which diagonalizes them, and hence, the same basis of eigenvectors.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+We will proceed by induction on $m$. Let $Q$ be a matrix which diagonlizes $A$, and define the diagonal matrix $D$ as
+\begin{align*}
+D = Q^{-1} A Q.
+\end{align*}
+Now, suppose for some $m \geq 1$ that $D^m = Q^{-1} A^m Q$. Then, we have
+\begin{align*}
+D^{m + 1} &= D^{m} D\\
+&= (Q^{-1} A^m Q)(Q^{-1} A Q)\\
+&= Q^{-1} A^m QQ^{-1} A Q\\
+&= Q^{-1} A^m A Q\\
+&= Q^{-1} A^{m+1} Q.
+\end{align*}
+Since $D$ is diagonal, $D^m$ is diagonal for all $m \in \mathbb{N}$, and our proof is complete.
+\end{proof}
+
+\section*{Problem 2}
+The trace of a matrix is defined to be the sum of the elements along the main diagonal,
+\begin{align*}
+\text{Tr}(A) &= \sum_{i} a_{ii}.
+\end{align*}
+
+\begin{theorem}
+\proofpart{(a)}{} Given a complex monic polynomial,
+\begin{align*}
+p(z) = z^n + a_{n-1}z^{n-1} + \cdots + a_1 z + a_0,
+\end{align*}
+$-a_{n - 1}$ is the sum of the complex roots of $p(z)$.
+
+\proofpart{(b)}{} Given a complex matrix $A \in M_{n \times n} (\mathbb{C})$, with characteristic polynomial 
+\begin{align*}
+g(z) = (-1)^{n} (z^n + a_{n-1}z^{n-1} + \cdots + a_1 z + a_0),
+\end{align*}
+$-a_{n-1}$ is the sum of the eigenvalues (with multiplicity) of $A$.
+
+\proofpart{(c)}{} For a diagonalizable complex matrix $A$, 
+\begin{align*}
+Tr(A) = -a_{n-1}.
+\end{align*}
+\end{theorem}
+
+\subsection*{Problem 3}
+\begin{proof}
+\proofpart{(a)}{} We will proceed by induction on $n$. If $n = 1$, we have
+\begin{align*}
+p(z) = z + a_0,
+\end{align*}
+and it follows immediately that $-a_0$ is the one and only root of $p(z)$.
+
+Now suppose, that for some $n \geq 1$, $-a_{n-1}$ is the sum of the complex roots of $p(z)$ when $p$ is an $n^{\text{th}}$ degree polynomial. Then, if $p(z)$ is an $(n+1)^{\text{th}}$ degree polynomial, the fundamental theorem of  algebra tells us we can factor $p(z)$ into
+\begin{align*}
+p(z) = (\lambda - z)g(z),
+\end{align*}
+where $g(z)$ is of the form
+\begin{align*}
+g(z) = z^n + a_{n-1}z^{n-1} + \cdots + a_1 z + a_0.
+\end{align*}
+By our inductive hypothesis, $-a_{n-1}$ is the sum of all complex roots (with multiplicity) of $g(z)$. Thus, $a_{n-1}$ is the sum of all complex roots of $p(z)$ except for root $\lambda$. Then, we have
+\begin{align*}
+p(z) &= (z - \lambda)g(z)\\
+&= (z - \lambda)(z^n + a_{n-1}z^{n-1} + \cdots + a_1 z + a_0)\\
+&= -\lambda z^n - \lambda a_{n-1}z^{n-1} - \cdots - \lambda a_1 z -  \lambda a_0 + z^{n+1} + a_{n-1}z^{n} + \cdots + a_1 z^2 + a_0z\\
+&= z^{n+1} + (a_{n-1} - \lambda)z^n + b_{n-1}z^n + \cdots + b_1 z + b_0,
+\end{align*}
+where the $b$ terms are the resulting coefficients from this product of polynomials (the exact form is irrelavant to this proof). Thus, since $-(a_{n-1} - \lambda)$ is the sum of the roots of $p(z)$, our proof of Part (a) is complete.
+
+\proofpart{(b)}{} Since the eigenvalues of $A$ are the roots of $A$s characteristic equation, it follows immediately from Part (a) that $-a_{n-1}$ is the sum of the eigenvalues (with multiplicity) of $A$.
+
+\proofpart{(c)}{} Let $B,C \in M_{n \times n} (\mathbb{C})$. Then, we have
+\begin{align*}
+\text{Tr}(BC) &= \sum_{i}^n (BC)_{ii}\\
+&= \sum_i^n \sum_j^n B_{ij}C_{ji} && \text{Definition of matrix multiplication}\\
+&= \sum_j^n \sum_i^n C_{ji}B_{ij} && \text{Nice properties of finite sums}\\
+&= \sum_{j}^n (CB)_{jj} && \text{Definition of matrix multiplication}\\
+&= \text{Tr}(CB).
+\end{align*}
+Thus, if $Q$ is the invertible matrix that diagonlizes $A$, and $D$ is the diagonal matrix (whose entries are all of the eigen values (with multiplicity) of $A$ defined by 
+\begin{align*}
+D = Q^{-1} A Q,
+\end{align*}
+then we have
+\begin{align*}
+\text{Tr}(D) &= \text{Tr}(Q^{-1} A Q)\\
+&= \text{Tr}(Q(Q^{-1} A ))\\
+&= \text{Tr}(A).
+\end{align*}
+Now, since each diagonal entry of $D$ is an eigen value of $D$, the trace of $D$ is the sum of it's eigenvalues (with multiplicity). As we proved on the last homework, $D$ and $A$ have the same characteristic equation. Thus, we have from Part (b) that $-a_{n-1}$ is the sum of all of the eigen values of $D$, and it follows that $Tr(A) = -a_{n-1}$.
+\end{proof}
+
+\section*{Problem 3}
+Hertz Rent-a-Car has a fleet of 2000 cars distributed across three locations in the Huntsville area: 1) Airport, 2) Downtown Huntsville, and 3) Madison Blvd. The movement of cars from one location to another over the course of a week can be described as a Markov process with transition matrix
+\[A = \begin{array}{c|c}
+\text{Rented from:}\\
+    \begin{array}{ccc} \text{Air} &\text{Dtwn} &\text{Mad}\\\hline
+    .90 &.01 &.09\\
+    .01 &.90 &.01\\
+    .09 &.09 &.90
+    \end{array} &\begin{array}{l} \text{Returned to:}\\\hline \text{Air}\\ \text{Dtwn} \\ \text{Mad} \end{array}
+\end{array}\]
+\begin{enumerate}
+    \item Find a diagonalizing matrix $Q$ and diagonal matrix $D$ so that $Q^{-1} A Q = D$
+    \item What are the eigenvalues of the transition matrix?
+    \item Find $\lim_{n \to \infty}A^n$.
+    \item How many cars should be allocated at each location to minimize the numbers of cars which need to be moved from one lot to another at week's end?
+    \end{enumerate}
+    
+\subsection*{Solution}
+\begin{enumerate}
+\item To find the diagonlizing matrix $Q$, we will first find the eigenvalues of $A$. We have
+\begin{align*}
+\begin{vmatrix}
+.90 - \lambda &.01 &.09\\
+.01 &.90 - \lambda &.01\\
+.09 &.09 &.90 - \lambda
+\end{vmatrix} &= -\lambda^{3} + 2.7 \lambda^2 - 2.4209 \lambda + 0.7209 && \text{(Computed with wolfram alpha)}.
+\end{align*}
+The eigenvalues are then 
+\begin{align*}
+\lambda_1 &= 1\\
+\lambda_2 &= 0.89\\
+\lambda_3 &= 0.81 && \text{(Computed with wolfram alpha)}
+\end{align*}
+The corresponding eigen vectors are
+\begin{align*}
+v_1 = \begin{bmatrix}
+91/99\\
+19/99\\
+1
+\end{bmatrix}  && v_2 = \begin{bmatrix}
+-1\\
+1\\
+0
+\end{bmatrix} && v_3 = \begin{bmatrix}
+-1\\
+0\\
+1
+\end{bmatrix}.
+\end{align*}
+These vectors form the column vectors of $Q$:
+\begin{align*}
+Q = \begin{bmatrix}
+91/99 && -1 && -1\\
+19/99 && 1 && 0\\
+1 && 0 && 1
+\end{bmatrix}.
+\end{align*}
+Plugging this into wolfram alpha, we get the inverse
+\begin{align*}
+Q^{-1} &= \frac{1}{209} \begin{bmatrix}
+99 && 99 && 99\\
+-19 && 190 && -19\\
+-99 && -99 && 110
+\end{bmatrix}.
+\end{align*}
+Plugging all of this in, we get
+\begin{align*}
+D &= Q^{-1} A Q\\
+&= \frac{1}{209} \begin{bmatrix}
+99 && 99 && 99\\
+-19 && 190 && -19\\
+-99 && -99 && 110
+\end{bmatrix} \begin{bmatrix}
+.90 &.01 &.09\\
+.01 &.90 &.01\\
+.09 &.09 &.90
+\end{bmatrix} \begin{bmatrix}
+91/99 && -1 && -1\\
+19/99 && 1 && 0\\
+1 && 0 && 1
+\end{bmatrix}\\
+&= \begin{bmatrix}
+1 && 0 && 0\\
+0 && 0.89 && 0\\
+0 && 0 && 0.81
+\end{bmatrix}.
+\end{align*}
+
+\item The eigenvalues were found in Part (1).
+
+\item By theorem 5.13 in our book $\lim_{n \to \infty} A^{n}$ exists ($A$ is diagonalizable and it's eigenvalues live in $S$), and
+\begin{align*}
+\lim_{n \to \infty} A^{n} &= \lim_{n \to \infty} (Q D^n Q^{-1})\\
+&= Q \lim_{n \to \infty} (D^n) Q^{-1}\\
+&= \frac{1}{209} \begin{bmatrix}
+91/99 && -1 && -1\\
+19/99 && 1 && 0\\
+1 && 0 && 1
+\end{bmatrix} \begin{bmatrix}
+1 && 0 && 0\\
+0 && 0 && 0\\
+0 && 0 && 0
+\end{bmatrix} \begin{bmatrix}
+99 && 99 && 99\\
+-19 && 190 && -19\\
+-99 && -99 && 110
+\end{bmatrix}\\
+&= \begin{bmatrix}
+91/209 && 0 && 0\\
+-19/1089 && 0 && 0\\
+-9/19 && 0 && 0
+\end{bmatrix}.
+\end{align*}
+
+\item In order to minimize the number of cars that need to be moved from one lot to another at each weeks end, we want to allocate cars in such a way that the number of cars at each location never becomes zero. One simple way to do this, is to use a multiple of $v_1$ as our car distribution. Since we need a whole number of cars (fraction of a car does not make sense), we should choose a multiple that causes $v_1$ to have natural number entries. Thus, one possible solution would be
+\begin{align*}
+99 v_1 &= \begin{bmatrix}
+91\\
+19\\
+99
+\end{bmatrix}.
+\end{align*}
+Since this vector corresponds to an eigenvalue of $1$, our model tells us that the distribution of cars at each weeks end will always be in this configuration, which means there will be no need to move cars between lots.
+\end{enumerate}
+\end{document}
