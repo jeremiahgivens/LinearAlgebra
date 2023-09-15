@@ -1,0 +1,273 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Linear Algebra}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 5}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+Let $A$ denote the $k \times k$ matrix
+\[\begin{bmatrix}
+0 &0 &\cdots &0 &-a_0\\
+1 &0 &\cdots &0 &-a_1\\
+0 &1 &\cdots &0 &-a_2\\
+\vdots &\vdots &\ddots &\vdots &\vdots\\
+0 &0 &\cdots &1 &-a_{k-1}
+\end{bmatrix},\]
+where the $a_i$'s are arbitrary scalars. Then the characteristic polynomial $f(t)$ of $A$ is
+\begin{align*}
+f(t) = (-1)^k(a_0 + a_1t + \cdots +a_{k-1}t^{k-1} + t^k).
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+We will proceed with induction on $k$. Starting with $k = 2$, we have
+\begin{align*}
+A &= \begin{bmatrix}
+0 & -a_0\\
+1 & -a_1
+\end{bmatrix}.
+\end{align*}
+Thus, 
+\begin{align*}
+|A - t I| &= \begin{vmatrix}
+-t & -a_0\\
+1 & -a_1 - t
+\end{vmatrix}\\
+&= -t(-a_1 - t) + a_0\\
+&= a_0 + a_1 t + t^2\\
+&= (-1)^2(a_0 + a_1 t + t^2),
+\end{align*}
+and we have proven the base case. Now suppose that for some $k >= 2$ the theorem holds. Now let $A$ be a $k+1 \times k+1$ matrix of the desired form. Define $B$ as 
+\begin{align*}
+B = A - tI,
+\end{align*}
+so that $f(t) = |B|$. Performing cofactor expansion along the first row, we have
+\begin{align*}
+|B| = -t |\tilde{B}_{1,1}| + (-1)^{k} (-a_0)  |\tilde{B}_{1,k+1}|.
+\end{align*}
+Noticing that $|\tilde{B}_{1,1}|$ is simply a characteristic polynomial for a $k \times k$ matrix of the desired form, our inductive hypothesis tells us that 
+\begin{align*}
+|\tilde{B}_{1,1}| &= (-1)^k(a_1 + a_2t + \cdots +a_{k}t^{k-1} + t^k).
+\end{align*}
+Furthermore, since $\tilde{B}_{1,k+1}$ is an upper triangular matrix, it's determinant is simply the product of the elements along its main diagonal. But all of the elements along it's main diagonal are 1, we can conclude that 
+\begin{align*}
+|\tilde{B}_{1,k+1}| &= 1.
+\end{align*}
+Thus, 
+\begin{align*}
+|B| &= -t (-1)^k(a_1 + a_2t + \cdots +a_{k}t^{k-1} + t^k) - a_0 (-1)^k\\
+&= t (-1)^{k+1}(a_1 + a_2t + \cdots +a_{k}t^{k-1} + t^k) + a_0 (-1)^{k+1}\\
+&= (-1)^{k+1}(a_0 + a_1 t + a_2 t^2 + \cdots +a_{k}t^{k} + t^{k+1}),
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 2}
+\begin{theorem}
+Let $T$ be a linear operator on a finite-dimensional vector space $V$. Then $T$ is diagonalizable if and only if $V$ is the direct sum of one-dimensional $T$-invariant subspaces.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Suppose first that $T$ is diagonlizable. Then, there exists a basis $\beta$ of $V$ consisting of eigenvectors of $T$
+\begin{align*}
+\beta &= \{v_1, \cdots, v_n \}.
+\end{align*}
+For each $1 \leq i \leq n$, define 
+\begin{align*}
+\beta_i = \text{Span} \{v_i \}.
+\end{align*}
+Clearly, by definition of an eigenvector, we have that each $\beta_i$ is $T$-invariant. Furthermore, by linear independence of our $v_i$, we have
+\begin{align*}
+\beta_j \cap \sum_{i \not= j} \beta_i &= \{0 \}.
+\end{align*}
+Finally, let $v \in V$. Since $\beta$ is a basis of $V$, there exist scalars $\{a_1, \cdots, a_n\}$ such that
+\begin{align*}
+v = \sum_{i = 1}^n a_i v_i.
+\end{align*}
+Since $a_i v_i \in \beta_i$ for each $i$, it follows that 
+\begin{align*}
+v \in \bigoplus_{i=1}^n \beta_i.
+\end{align*}
+For the other direction, suppose $V$ is the direct sum of one-dimensional $T$-invariant subspaces $\{\beta_1, \cdots, \beta_n\}$. Let $v_i \in \beta_i$, with $v_i \not = 0$, for each $i$. Then, since the direct sum of these subspaces equals $V$, it follows that $\{v_1, \cdots, v_n \}$ forms a basis of $V$. Furthermore, since $\beta_i$ is $T$-invariant and one dimensional,
+\begin{align*}
+T(v_i) \in \beta_i &\implies T(v_i) \in \text{Span} \{v_i\}\\
+&\implies (\exists \lambda_i \in \mathbb{F})(T(v_i) = \lambda_i v_i)\\
+&\implies v_i \text{ is an eigenvector of } T.
+\end{align*}
+Thus, we have a basis of $V$ consisting of eigenvectors of $T$, which allows us to conclude that $T$ is diagonlizable.
+\end{proof}
+
+\section*{Problem 3}
+Let $A$ be an $n \times n$ matrix with characteristic polynomial
+\begin{align*}
+f(t) = (-1)^n t^n + a_{n-1} t^{n-1} + \cdots + a_1 t + a_0.
+\end{align*}
+\proofpart{(a)}{} Prove that if $A$ is invertible, then
+\begin{align*}
+A^{-1} = (-1/a_0) [(-1)^n A^{n-1} + a_{n-1} A^{n-2} + \cdots + a_1 I_n].
+\end{align*}
+\proofpart{(b)}{} Use (a) to compute $A^{-1}$ for 
+\begin{align*}
+A &= \begin{bmatrix}
+1 & 2 & 1\\
+0 & 2 & 3\\
+0 & 0 & -1
+\end{bmatrix}.
+\end{align*}
+
+\subsection*{Solution}
+\proofpart{(a)}{} By the Cayley-Hamilton theorem, we have
+\begin{align*}
+(-1)^n A^n + a_{n-1} A^{n-1} + \cdots + a_1 A + a_0I = 0_n.
+\end{align*}
+Multiplying by $A^{-1}$ on the right of both sides of this equation and rearranging, we have
+\begin{align*}
+-1)^n A^n A^{-1} + a_{n-1} A^{n-1}A^{-1} + \cdots + a_1 AA^{-1} + a_0IA^{-1} &= 0_nA^{-1}\\
+(-1)^n A^{n-1} + a_{n-1} A^{n-2} + \cdots + a_1 I + a_0A^{-1} &= 0_n\\
+a_0A^{-1} &= 0_n - [(-1)^n A^{n-1} + a_{n-1} A^{n-2} + \cdots + a_1 I]\\
+&= - [(-1)^n A^{n-1} + a_{n-1} A^{n-2} + \cdots + a_1 I]\\
+A^{-1} &= (-1/a_0) [(-1)^n A^{n-1} + a_{n-1} A^{n-2} + \cdots + a_1 I_n],
+\end{align*}
+as desired.
+
+\proofpart{(b)}{} We will start by finding the characteristic polynomial of $A$:
+\begin{align*}
+f(t) &= \begin{bmatrix}
+1 - t & 2 & 1\\
+0 & 2 - t & 3\\
+0 & 0 & -1 - t
+\end{bmatrix}\\
+&= (1-t)(2-t)(-1 - t)\\
+&= -(1-t)(2-t)(1 + t)\\
+&= -(t^2 - 3t + 2)(1 + t)\\
+&= -(t^3 - 3t^2 + 2t + t^2 - 3t + 2)\\
+&= -t^3 + 2t^2 + t - 2\\
+&= (-1)^3 t^3 + 2t^2 + t + (-2).
+\end{align*}
+From this, we see
+\begin{align*}
+a_0 = -2 && a_1 = 1 && a_2 = 2.
+\end{align*}
+In order to use part (a), we must find the square of $A$:
+\begin{align*}
+A^2 &= \begin{bmatrix}
+1 & 2 & 1\\
+0 & 2 & 3\\
+0 & 0 & -1
+\end{bmatrix} \begin{bmatrix}
+1 & 2 & 1\\
+0 & 2 & 3\\
+0 & 0 & -1
+\end{bmatrix}\\
+&= \begin{bmatrix}
+1 & 6 & 6\\
+0 & 4 & 3\\
+0 & 0 & 1
+\end{bmatrix}.
+\end{align*}
+Finally, plugging it all in, we see
+\begin{align*}
+A^{-1} &= (-1/a_0) [(-1)^n A^{n-1} + a_{n-1} A^{n-2} + \cdots + a_1 I_n]\\
+&= \frac{1}{2}[-A^2 + 2A + I_n]\\
+&= \frac{1}{2} \left( \begin{bmatrix}
+-1 & -6 & -6\\
+0 & -4 & -3\\
+0 & 0 & -1
+\end{bmatrix} + \begin{bmatrix}
+2 & 4 & 2\\
+0 & 4 & 6\\
+0 & 0 & -2
+\end{bmatrix} + \begin{bmatrix}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{bmatrix}\right)\\
+&= \frac{1}{2} \begin{bmatrix}
+2 & -2 & -4\\
+0 & 1 & 3\\
+0 & 0 & -2
+\end{bmatrix}.
+\end{align*}
+\end{document}
