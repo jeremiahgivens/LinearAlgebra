@@ -158,9 +158,12 @@ For each $1 \leq i \leq n$, define
 \begin{align*}
 \beta_i = \text{Span} \{v_i \}.
 \end{align*}
-Clearly, by definition of an eigenvector, we have that each $\beta_i$ is $T$-invariant. Furthermore, by linear independence of our $v_i$, we have
+Clearly, by definition of an eigenvector, we have that each $\beta_i$ is $T$-invariant. Furthermore,
 \begin{align*}
-\beta_j \cap \sum_{i \not= j} \beta_i &= \{0 \}.
+v \in \beta_j \land v \not= 0 &\implies (\exists a \in \mathbb{F} \backslash \{0\})(v = av_j)\\
+&\implies v \not \in \text{Span} (\beta \backslash \{v_j \}) && \text{By linear independence of } \beta\\
+&\implies v \not \in \sum_{i \not= j} \beta_i\\
+&\implies \beta_j \cap \sum_{i \not= j} \beta_i = \{0\}.
 \end{align*}
 Finally, let $v \in V$. Since $\beta$ is a basis of $V$, there exist scalars $\{a_1, \cdots, a_n\}$ such that
 \begin{align*}
