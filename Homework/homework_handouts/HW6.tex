@@ -1,0 +1,66 @@
+\documentclass[11 pt]{article}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{arrows}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{mathtools}
+
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+
+\DeclareMathOperator\rowspan{Row}
+\DeclareMathOperator\tr{Tr}
+\DeclarePairedDelimiterX{\floor}[1]{\lfloor}{\rfloor}{#1}
+\DeclarePairedDelimiterX{\iprod}[1]{\langle}{\rangle}{#1}
+\DeclareMathOperator\rank{rank}
+\let\span\relax
+\DeclareMathOperator\span{span}
+
+\DeclarePairedDelimiterX{\norm}[1]{\lVert}{\rVert}{#1}
+
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\B}{\mathcal{B}}
+
+\begin{document}
+\onehalfspacing
+\begin{center}
+\textbf{{\Large Linear Algebra, Fall 2023}\\
+Written Homework 6}\\
+Due: 20 Sep 2023
+\end{center}
+
+\noindent Please answer the following questions on a separate sheet of paper and turn it in.
+
+\begin{enumerate}
+\item Prove the {\it Parallelogram Law} for an inner product space $V$.
+\[\norm{x+y}^2 + \norm{x-y}^2 = 2 \norm{x}^2 + 2 \norm{y}^2\]
+
+\item Let $V$ be a real or complex finite dimensional vector space, and let $\B = \{v_1, v_2, \ldots, v_k\}$ be a basis for $V$. Then for any $x, y \in V$, we may write
+\[x = \sum_i a_i v_i \quad \text{and} \quad y = \sum_j b_j v_j.\]
+
+Define 
+\[\iprod{x, y}= \sum_{i =1}^k a_i \overline{b_i}.\]
+Prove that $\iprod{\cdot,\cdot}$ is an inner product on $V$ and that $\B$ is an orthonormal basis for $V$. Conclude that every real or complex vector space may be regarded as an inner product space.
+
+\item One way to think about the standard inner product $\iprod{x,y} = \sum_{i}x_i\overline{y_i}$ is to visualize $x$ and $y$ as $n \times 1$ column vectors, then $\iprod{x,y} = y^*x$ (note the similarity to the Frobenius norm).
+
+Let $V = \F^n$ with the standard inner product and $A \in M_{n \times n}(\F)$.
+    \begin{enumerate}
+    \item Prove that $\iprod{x,Ay} = \iprod{A^*x, y}$
+    \item Suppose for some $B \in M_{n \times n}(\F)$ we have that $\iprod{x,Ay} = \iprod{Bx,y}$ for all $x,y \in V$. Prove that $B = A^*$.
+    \end{enumerate}
+\end{enumerate}
+\end{document}

@@ -1,0 +1,193 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\B}{\mathcal{B}}
+\DeclarePairedDelimiterX{\iprod}[1]{\langle}{\rangle}{#1}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Linear Algebra}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 6}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+Let $x,y$ be elements of the inner product space $V$. Then
+\begin{align*}
+||x + y ||^2 + ||x - y ||^2 = 2||x||^2 + 2||y||^2.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Using the axioms of an inner product space and theorem 6.1, we have
+\begin{align*}
+||x + y ||^2 &= \langle x + y , x + y \rangle \\
+&= \langle x , x + y \rangle + \langle y , x + y \rangle\\
+&= \langle x , x \rangle + \langle x , y \rangle + \langle y , y \rangle + \langle y , x \rangle\\
+&= ||x||^2 + ||y||^2 + \langle x , y \rangle + \langle y , x \rangle.
+\end{align*}
+Similarly,
+\begin{align*}
+||x - y ||^2 &= \langle x - y , x - y \rangle \\
+&= \langle x , x - y \rangle - \langle y , x - y \rangle\\
+&= \langle x , x \rangle - \langle x , y \rangle - \langle y , x \rangle + \langle y , y \rangle\\
+&= ||x||^2 + ||y||^2 - \langle x , y \rangle - \langle y , x \rangle.
+\end{align*}
+Thus, we have
+\begin{align*}
+||x + y ||^2 + ||x - y ||^2 = 2||x||^2 + 2||y||^2,
+\end{align*}
+as desired.
+\end{proof}
+
+\section*{Problem 2}
+Let $V$ be a real or complex finite dimensional vector space, and let $\B = \{v_1, v_2, \ldots, v_k\}$ be a basis for $V$. Then for any $x, y \in V$, we may write
+\[x = \sum_i a_i v_i \quad \text{and} \quad y = \sum_j b_j v_j.\]
+
+Define 
+\[\iprod{x, y}= \sum_{i =1}^k a_i \overline{b_i}.\]
+Prove that $\iprod{\cdot,\cdot}$ is an inner product on $V$ and that $\B$ is an orthonormal basis for $V$. Conclude that every real or complex vector space may be regarded as an inner product space.
+
+\subsection*{Solution}
+\begin{proof}
+Two show properties (a) and (b), let $z = \sum_i c_i v_i$ and let $c \in \F$. Then, we have
+\begin{align*}
+\iprod{cx + z, y} &= \sum_{i =1}^k (ca_i + c_i)\overline{b_i}\\
+&= c\sum_{i =1}^k a_i\overline{b_i} + \sum_{i =1}^k c_i\overline{b_i}\\
+&= c \iprod{x, y} + \iprod{z, y}.
+\end{align*}
+For property $c$, we have 
+\begin{align*}
+\overline{\iprod{x, y}} &= \overline{\sum_{i =1}^k a_i \overline{b_i}}\\
+&= \sum_{i =1}^k \overline{a_i \overline{b_i}}\\
+&= \sum_{i =1}^k \overline{a_i} b_i\\
+&= \sum_{i =1}^k b_i \overline{a_i}\\
+&= \iprod{y, x}.
+\end{align*}
+Finally, to verify condition (d), let $x \not = 0$. We have
+\begin{align*}
+\iprod{x,x} &= \sum_{i =1}^k a_i \overline{a_i}\\
+&= \sum_{i =1}^k |a_i|^2.
+\end{align*}
+Now, since each term is a complex square, this is a sum of nonnegative real numbers, and is therefore real and nonnegative. Furthermore, since $x \not = 0$, this sum has at least one term that is nonzero. Thus, this sum is a positive real number, and we have shown this function is an inner product on $V$.
+\end{proof}
+
+\section*{Problem 3}
+\begin{theorem}
+Let $V \in \F^n$ with that standard inner product and $A \in M_{n \times n}(\F)$. Then the following statements are true:
+\proofpart{(a)}{} $\iprod{x, Ay} = \iprod{A^* x, y}$
+
+\proofpart{(b)}{} If for some $B \in M_{n \times n}(\F)$ we have $\iprod{x, Ay} = \iprod{B x, y}$ for all $x, y \in V$, then $B = A^*$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(a)}{} Using the definition of our standard inner product, we have
+\begin{align*}
+\iprod{x, Ay} &= \sum_{i = 1}^n x_i \overline{(Ay)_i}\\
+&= \sum_{i = 1}^n x_i \overline{\sum_{j = 1}^n A_{i, j}y_j}\\
+&= \sum_{i = 1}^n x_i \sum_{j = 1}^n \overline{A_{i, j}y_j}\\
+&= \sum_{i = 1}^n \sum_{j = 1}^n x_i \overline{A_{i, j}} \overline{y_j}\\
+&= \sum_{i = 1}^n \sum_{j = 1}^n A_{j, i}^* x_i \overline{y_j}\\
+&= \sum_{j = 1}^n \left( \sum_{i = 1}^n A_{j, i}^* x_i \right) \overline{y_j}\\
+&= \sum_{j = 1}^n (A^*x)_j \overline{y_j}\\
+&= \iprod{A^*x, y},
+\end{align*}
+as desired.
+
+\proofpart{(b)}{} For any two vectors $x,y \in V$, we have
+\begin{align*}
+\iprod{Bx, y} &= \iprod{x, Ay}\\
+&= \iprod{A^* x, y}
+\end{align*}
+by part (a). Thus, for any $x \in V$, we have
+\begin{align*}
+0 &= \iprod{Bx, Bx - A^*x} - \iprod{A^* x, Bx - A^*x}\\
+&= \iprod{Bx - A^* x, Bx - A^*x}.
+\end{align*}
+By taking the contrapositive of property (d) of inner product, we have that 
+\begin{align*}
+Bx - A^*x = 0 \implies Bx = A^*x.
+\end{align*}
+Since this is true for any $x \in V$, we can conclude that $B = A^*$.
+\end{proof}
+\end{document}
