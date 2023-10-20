@@ -1,0 +1,147 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\B}{\mathcal{B}}
+\DeclarePairedDelimiterX{\iprod}[1]{\langle}{\rangle}{#1}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Linear Algebra}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 6}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+Let $T$ be a normal operator on a finite-dimensional inner product space $V$,
+and let $W$ be a subspace of $V$. Then $W$ is $T$-invariant if and only if
+$W$ is also $T^*$-invariant.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Suppose $W$ is $T$-invariant, and let $\{w_1, \cdots, w_k \}$ be an orthonormal basis for $W$. Extend this to an orthonormal basis of $V$:
+\begin{align*}
+\beta = \{w_1, \cdots, w_k, v_1, \cdots, v_n \}.
+\end{align*}
+Then, since $W$ is $T$-invariant, we know $[T]_\beta$ has the form
+\begin{align*}
+[T]_\beta = \begin{bmatrix}
+A && B\\
+0 && C
+\end{bmatrix}
+\end{align*}
+where $A$ is an $k \times k$ matrix, and $B$ is an $n \times k$ matrix, and $C$ is an $n \times n$ matrix. With this notation, we have
+\begin{align*}
+[T^*]_\beta = \begin{bmatrix}
+A^* && 0\\
+B^* && C^*
+\end{bmatrix}.
+\end{align*}
+Thus, to show that $W$ is $T^*$ invariant, we must show that $B^* = 0$. Now, since $T$ is normal, we have
+\begin{align*}
+||Tw_i|| = ||T^* w_i|| &\implies ||Tw_i||^2 = ||T^* w_i||^2
+\end{align*}
+for each $i$. Writing these in terms of our matrices, we see
+\begin{align*}
+||Tw_i||^2 &= \sum_{j = 1}^k |A_{ji}|^2,
+\end{align*}
+and
+\begin{align*}
+||T^*w_i||^2 &= \sum_{j = 1}^k |A^*_{ji}|^2 + \sum_{j = 1}^n |B^*_{ji}|^2\\
+&= \sum_{j = 1}^k |\overline{A_{ij}}|^2 + \sum_{j = 1}^n |\overline{B_{ij}}|^2\\
+&= \sum_{j = 1}^k |A_{ij}|^2 + \sum_{j = 1}^n |B_{ij}|^2.
+\end{align*}
+As is, these do not allow for any immediately useful comparison, as the two sums are running over different elements of $A$. To ensure that we run over each element of $A$, we will sum over the square magnitude of the images of each $w_i$. Jumping right in, we see
+\begin{align*}
+\sum_{i=1}^k ||Tw_i||^2 &= \sum_{i=1}^k \sum_{j = 1}^k |A_{ji}|^2,
+\end{align*}
+and 
+\begin{align*}
+\sum_{i=1}^k ||T^*w_i||^2 &= \sum_{i=1}^k\sum_{j = 1}^k |A_{ij}|^2  + \sum_{i=1}^k \sum_{j = 1}^n |B_{ij}|^2 \\
+&= \sum_{i=1}^k\sum_{j = 1}^k |A_{ji}|^2  + \sum_{i=1}^k \sum_{j = 1}^n |B_{ij}|^2 \\
+&= \sum_{i=1}^k ||Tw_i||^2 + \sum_{i=1}^k \sum_{j = 1}^n |B_{ij}|^2.
+\end{align*}
+Since the second summation in the equation above must be zero, and each element is nonnegative, it follows that each term in the sum is 0. However, this summation is adding together the complex square of each element of $B^*$, which means we can conclude that $B^* = 0$, as desired.
+
+Now suppose that $W$ is $T^*$-invariant. Since $T^{**} = T$, and $T^*$ is normal, it follows immediately from the section above that $W$ is $T$-invariant.
+\end{proof}
+
+\end{document}
