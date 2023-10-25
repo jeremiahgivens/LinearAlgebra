@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.11)  20 OCT 2023 23:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.11)  25 OCT 2023 10:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -999,7 +999,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ] [2] [3]
-Overfull \hbox (0.82724pt too wide) detected at line 282
+Overfull \hbox (0.82724pt too wide) detected at line 289
 []
  []
 
@@ -1007,7 +1007,7 @@ Overfull \hbox (0.82724pt too wide) detected at line 282
 Here is how much of TeX's memory you used:
  30650 strings out of 476025
  777188 string characters out of 5790016
- 1870388 words of memory out of 5000000
+ 1871388 words of memory out of 5000000
  50509 multiletter control sequences out of 15000+600000
  516149 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1026,7 +1026,7 @@ pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pf
 b></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
 ></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb>
-Output written on HW7.pdf (5 pages, 156980 bytes).
+Output written on HW7.pdf (5 pages, 157436 bytes).
 PDF statistics:
  88 PDF objects out of 1000 (max. 8388607)
  54 compressed objects within 1 object stream

@@ -80,7 +80,7 @@
 \makeatletter
 \rhead{{\small\@author}}
 \lhead{{\small\subject}}
-\chead{{\large Homework 6}}
+\chead{{\large Homework 7}}
 \cfoot{}
 \rfoot{\thepage}
 \lfoot{\today}
@@ -205,13 +205,20 @@ U^*U &= \sum_{i=1}^k \lambda_i T_i &&\text{By part (c) of the spectral theorem}\
 &= T &&\text{By part (e) of the spectral theorem.}
 \end{align*}
 
-Now suppose that $T = U^* U$ for some operator $U$ on $V$. Then, for any $x \in V$, we have
+Now suppose that $T = U^* U$ for some operator $U$ on $V$. Clearly, $T$ is self-adjoint, since
+\begin{align*}
+T^* &= (U^* U)^*\\
+&= U^* U^{**}\\
+&= U^* U\\
+&= T.
+\end{align*} 
+Then, for any $x \in V$, we have
 \begin{align*}
 \iprod{Tx, x} &= \iprod{U^*U x, x}\\
 &= \iprod{U x, U^* x}\\
 &\geq 0,
 \end{align*}
-and we can conclude that $T$ is self-adjoint.
+and we can conclude that $T$ is positive semi-definite.
 \end{proof}
 
 \section*{Problem 3}
@@ -308,9 +315,10 @@ and
 Thus, by linear independence of each $T_k$, we have 
 \begin{align*}
 T = -T^* &\iff (\forall 1 \leq i \leq k)(a_i = 0)\\
-&\iff (\forall 1 \leq i \leq k)(\lambda_i \text{ is imaginary})
+&\iff (\forall 1 \leq i \leq k)(\lambda_i \text{ is imaginary}),
 \end{align*}
 \end{enumerate}
+and our proof is complete.
 \end{proof}
 
 \end{document}
