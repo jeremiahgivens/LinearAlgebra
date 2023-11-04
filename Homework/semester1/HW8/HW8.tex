@@ -1,0 +1,636 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\B}{\mathcal{B}}
+\DeclarePairedDelimiterX{\iprod}[1]{\langle}{\rangle}{#1}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Linear Algebra}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 8}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+Find the singular value decomposition of the matrix
+\begin{align*}
+A = \begin{bmatrix}
+1 & 1\\
+0 & 1\\
+1 & 0\\
+1 & 1
+\end{bmatrix}
+\end{align*}
+
+\subsection*{Solution}
+We start by computing $A^*A$:
+\begin{align*}
+A^*A &= \begin{bmatrix}
+1 & 0 & 1 & 1\\
+1 & 1 & 0 & 1
+\end{bmatrix} \begin{bmatrix}
+1 & 1\\
+0 & 1\\
+1 & 0\\
+1 & 1
+\end{bmatrix}\\
+&= \begin{bmatrix}
+3 & 2\\
+2 & 3
+\end{bmatrix}.
+\end{align*}
+Now, we find the eigenvalues of this matrix:
+\begin{align*}
+\begin{vmatrix}
+3 - \lambda & 2\\
+2 & 3 - \lambda
+\end{vmatrix} &= (3 - \lambda)^2 - 4\\
+&= \lambda^2 - 6\lambda + 5\\
+&= (\lambda - 5)(\lambda - 1).
+\end{align*}
+Thus, we have $\lambda_1 = 5$ and $\lambda_2 = 1$. Now we find the corresponding eigenvectors to these eigenvalues. We have
+\begin{align*}
+\begin{bmatrix}
+3 - \lambda_1 & 2\\
+2 & 3 - \lambda_1
+\end{bmatrix} &= \begin{bmatrix}
+3 - 5 & 2\\
+2 & 3 - 5
+\end{bmatrix}\\
+&= \begin{bmatrix}
+-2 & 2\\
+2 & -2
+\end{bmatrix}\\
+&\to \begin{bmatrix}
+2 & -2\\
+2 & -2
+\end{bmatrix} && -R_1\\
+&\to \begin{bmatrix}
+2 & -2\\
+0 & 0
+\end{bmatrix} && R_2 - R_1\\
+&\to \begin{bmatrix}
+1 & -1\\
+0 & 0
+\end{bmatrix} && R_2 - R_1,
+\end{align*}
+and we can see that
+\begin{align*}
+v_1 = \frac{1}{\sqrt{2}} \begin{bmatrix}
+1\\
+1
+\end{bmatrix}
+\end{align*}
+is a normalized eigenvector corresponding to eigenvalue $\lambda_1$. Doing the same for our remaining eigenvalue, we have
+\begin{align*}
+\begin{bmatrix}
+3 - \lambda_2 & 2\\
+2 & 3 - \lambda_2
+\end{bmatrix} &= \begin{bmatrix}
+3 - 1 & 2\\
+2 & 3 - 1
+\end{bmatrix}\\
+&= \begin{bmatrix}
+2 & 2\\
+2 & 2
+\end{bmatrix}\\
+&\to \begin{bmatrix}
+1 & 1\\
+0 & 0
+\end{bmatrix}
+\end{align*}
+and we can see that 
+\begin{align*}
+v_2 &= \frac{1}{\sqrt{2}} \begin{bmatrix}
+1\\
+-1
+\end{bmatrix}
+\end{align*}
+is a normalized eigenvector corresponding to eigenvalue $\lambda_2$.
+
+Now, the singular values of $A$ are $\sigma_1 = \sqrt{\lambda_1} = \sqrt{5}$ and $\sigma_2 = \sqrt{\lambda_2} = 1$, and we can compute the column vectors of $u$:
+\begin{align*}
+u_1 &= \frac{1}{\sigma_1} A v_1\\
+&= \frac{1}{5 \sqrt{2}} \begin{bmatrix}
+1 & 1\\
+0 & 1\\
+1 & 0\\
+1 & 1
+\end{bmatrix} \begin{bmatrix}
+1\\
+1
+\end{bmatrix}\\
+&= \frac{1}{5 \sqrt{2}} \begin{bmatrix}
+2\\
+1\\
+1\\
+2
+\end{bmatrix},
+\end{align*}
+and 
+\begin{align*}
+u_2 &= \frac{1}{\sigma_2} A v_2\\
+&= \frac{1}{\sqrt{2}} \begin{bmatrix}
+1 & 1\\
+0 & 1\\
+1 & 0\\
+1 & 1
+\end{bmatrix} \begin{bmatrix}
+1\\
+-1
+\end{bmatrix}\\
+&= \frac{1}{\sqrt{2}} \begin{bmatrix}
+0\\
+-1\\
+1\\
+0
+\end{bmatrix}.
+\end{align*}
+Thus, we have
+\begin{align*}
+A &= U \Sigma V^*\\
+&= \begin{bmatrix}
+\frac{2}{5 \sqrt{2}} & 0\\
+\frac{1}{5 \sqrt{2}} & -\frac{1}{\sqrt{2}}\\
+\frac{1}{5 \sqrt{2}} & \frac{1}{\sqrt{2}}\\
+\frac{2}{5 \sqrt{2}} & 0
+\end{bmatrix} \begin{bmatrix}
+\sqrt{5} & 0\\
+0 & 1
+\end{bmatrix} \begin{bmatrix}
+\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}\\
+\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+\end{bmatrix}.
+\end{align*}
+
+\section*{Problem 2}
+If $A = (a_ij)$ is an $m\times n$ real matrix, recall that the Frobenius norm of $A$ is
+\begin{align*}
+||A||_F = \sqrt{\text{Tr}(A^*A)}.
+\end{align*}
+Show that $||A||_F = \sum \sigma_i^2$, the sum of the squares of the singular values of $A$.
+
+\subsection*{Solution}
+\begin{proof}
+Suppose $A$ has $k$ singular values. Define $\sigma_i = 0$ for $k \leq i \leq n$. As we saw in the proof of the singular value theorem, $A^* A$ is diagonlizable and has eigenvalues $\sigma_i^2$. Thus, there exists an invertible matrix $Q$ such that 
+\begin{align*}
+Q A^* A Q^{-1} &= \begin{bmatrix}
+    \sigma_1^2 & & 0 \\
+    & \ddots & \\
+    0& & \sigma_n^2
+  \end{bmatrix}.
+\end{align*}
+Finally, we have 
+\begin{align*}
+||A||^2_F &= \text{Tr}(A^*A)\\
+&= \text{Tr}(Q A^* A Q^{-1}) && \text{Proved in part (c) of problem 3 of HW4}\\
+&= \text{Tr} \left(\begin{bmatrix}
+    \sigma_1^2 & & 0 \\
+    & \ddots & \\
+    0& & \sigma_n^2
+  \end{bmatrix} \right)\\
+&= \sum_{i=1}^n \sigma_i^2\\
+&= \sum_{i=1}^k \sigma_i^2,
+\end{align*}
+as desired.
+\end{proof}
+
+\section*{Problem 3}
+Find the polar decomposition of the matrix 
+\begin{align*}
+A = \begin{bmatrix}
+1 & 1\\
+2 & -2
+\end{bmatrix}.
+\end{align*}
+
+\subsection*{Solution}
+Starting as usual, 
+\begin{align*}
+A^* A &= \begin{bmatrix}
+1 & 2\\
+1 & -2
+\end{bmatrix} \begin{bmatrix}
+1 & 1\\
+2 & -2
+\end{bmatrix}\\
+&= \begin{bmatrix}
+5 & -3\\
+-3 & 5
+\end{bmatrix}.
+\end{align*}
+Now we find the eigenvalues:
+\begin{align*}
+\begin{vmatrix}
+5 - \lambda & -3\\
+-3 & 5 - \lambda
+\end{vmatrix} &= (5 - \lambda)^2 - 9\\
+&= \lambda^2 -10 \lambda + 16\\
+&= (\lambda - 2)(\lambda - 8).
+\end{align*}
+Thus, $\sigma_1^2 = 8$ and $\sigma_2^2 = 2$. Finding the corresponding eigenvectors:
+\begin{align*}
+\begin{bmatrix}
+5 - 8 & -3\\
+-3 & 5 - 8
+\end{bmatrix} &= \begin{bmatrix}
+-3 & -3\\
+-3 & -3
+\end{bmatrix},
+\end{align*}
+and we can see we have a normalized eigenvector of 
+\begin{align*}
+v_1 = \begin{bmatrix}
+\frac{1}{\sqrt{2}}\\
+\frac{-1}{\sqrt{2}}
+\end{bmatrix}.
+\end{align*}
+The other one we can easily get by looking:
+\begin{align*}
+v_2 = \begin{bmatrix}
+\frac{1}{\sqrt{2}}\\
+\frac{1}{\sqrt{2}}
+\end{bmatrix}.
+\end{align*}
+We will now compute our $u_i$:
+\begin{align*}
+u_1 &= \frac{1}{\sigma_1} A v_1\\
+&= \frac{1}{2\sqrt{2}} \begin{bmatrix}
+1 & 1\\
+2 & -2
+\end{bmatrix} \begin{bmatrix}
+\frac{1}{\sqrt{2}}\\
+\frac{-1}{\sqrt{2}}
+\end{bmatrix}\\
+&= \begin{bmatrix}
+0\\
+1
+\end{bmatrix}.
+\end{align*}
+We know $u_2$ is orthonormal to this, so we immediately have
+\begin{align*}
+u_2 = \begin{bmatrix}
+1\\
+0
+\end{bmatrix}.
+\end{align*}
+Following the construction used in the proof of the polar decomposition theorem, we have
+\begin{align*}
+W &= UV^*\\
+&= V^*\\
+&= \begin{bmatrix}
+\frac{1}{\sqrt{2}} & \frac{-1}{\sqrt{2}}\\
+\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}
+\end{bmatrix},
+\end{align*}
+and
+\begin{align*}
+P &= V \Sigma V^*\\
+&= \begin{bmatrix}
+\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}\\
+\frac{-1}{\sqrt{2}} & \frac{1}{\sqrt{2}}
+\end{bmatrix} \begin{bmatrix}
+2\sqrt{2} & 0\\
+0 & \sqrt{2}
+\end{bmatrix} \begin{bmatrix}
+\frac{1}{\sqrt{2}} & \frac{-1}{\sqrt{2}}\\
+\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}
+\end{bmatrix}\\
+&= \begin{bmatrix}
+\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}\\
+\frac{-1}{\sqrt{2}} & \frac{1}{\sqrt{2}}
+\end{bmatrix} \begin{bmatrix}
+2 & -2\\
+1 & 1
+\end{bmatrix}\\
+&= \frac{1}{\sqrt{2}} \begin{bmatrix}
+3 & -1\\
+-1 & 3
+\end{bmatrix}.
+\end{align*}
+Thus, we have found the unitary matrix $W$ and positive semidefinite matrix $P$ such that $A = WP$, which means we have found a polar decomposition of $A$.
+
+\section*{Problem 4}
+Use the pseudoinverse to find the least-square solution to the following system of equations:
+\begin{align*}
+x + y + z = 5 \text{, and } 2x - y + z = 2.
+\end{align*}
+
+\subsection*{Solution}
+The matrix for this system of equations is
+\begin{align*}
+A &= \begin{bmatrix}
+1 & 1 & 1\\
+2 & -1 & 1
+\end{bmatrix}.
+\end{align*}
+To find the psuedoinverse, we will first find the matrices used in the singular value decomposition of $A$. We have 
+\begin{align*}
+A^* A &= \begin{bmatrix}
+1 & 2\\
+1 & -1\\
+1 & 1
+\end{bmatrix} \begin{bmatrix}
+1 & 1 & 1\\
+2 & -1 & 1
+\end{bmatrix}\\
+&= \begin{bmatrix}
+5 & -1 & 3\\
+-1 & 2 & 0\\
+3 & 0 & 2
+\end{bmatrix}.
+\end{align*}
+Now we find the eigenvalues:
+\begin{align*}
+\begin{vmatrix}
+5 - \lambda & -1 & 3\\
+-1 & 2 - \lambda & 0\\
+3 & 0 & 2 - \lambda
+\end{vmatrix} &= 3 \begin{vmatrix}
+-1 & 2 - \lambda\\
+3 & 0
+\end{vmatrix} + (2-\lambda) \begin{vmatrix}
+5 - \lambda & -1\\
+-1 & 2 - \lambda
+\end{vmatrix}\\
+&= (2- \lambda) [-9 + (5-\lambda)(2 - \lambda) - 1]\\
+&= (2- \lambda)[-10 + 10 - 7\lambda + \lambda^2]\\
+&= \lambda (2- \lambda)(\lambda - 7).
+\end{align*}
+Thus, $\sigma_1^2 = 7$, and $\sigma_2^2 = 2$. Now we find the orthonormal basis (by finding our eigenvectors):
+\begin{align*}
+\begin{bmatrix}
+5 - 7 & -1 & 3\\
+-1 & 2 - 7 & 0\\
+3 & 0 & 2 - 7
+\end{bmatrix} &= \begin{bmatrix}
+5 - 7 & -1 & 3\\
+-1 & 2 - 7 & 0\\
+3 & 0 & 2 - 7
+\end{bmatrix}\\
+&= \begin{bmatrix}
+-2 & -1 & 3\\
+-1 & -5 & 0\\
+3 & 0 & -5
+\end{bmatrix}\\
+&\to \begin{bmatrix}
+1 & 14 & 3\\
+-1 & -5 & 0\\
+3 & 0 & -5
+\end{bmatrix} && R_1 - 3 R_2\\
+&\to \begin{bmatrix}
+1 & 14 & 3\\
+0 & 9 & 3\\
+0 & -42 & -14
+\end{bmatrix} && R_3 - 3 R_1\\
+&\to \begin{bmatrix}
+1 & 14 & 3\\
+0 & 1 & \frac{1}{3}\\
+0 & -42 & -14
+\end{bmatrix} && \frac{1}{9}R_2\\
+&\to \begin{bmatrix}
+1 & 0 & -\frac{5}{3}\\
+0 & 1 & \frac{1}{3}\\
+0 & 0 & 0
+\end{bmatrix} && R_3 + 42 R_2.
+\end{align*}
+Thus, the vector
+\begin{align*}
+x = \begin{bmatrix}
+5\\
+-1\\
+3
+\end{bmatrix}
+\end{align*}
+is an eigenvector with eigenvalue $7$. Normalizing, we have
+\begin{align*}
+v_1 =  \begin{bmatrix}
+\frac{5}{\sqrt{35}}\\
+\frac{-1}{\sqrt{35}}\\
+\frac{3}{\sqrt{35}}
+\end{bmatrix}.
+\end{align*}
+Doing the same for our next eigenvalue:
+\begin{align*}
+\begin{bmatrix}
+5 - 2 & -1 & 3\\
+-1 & 2 - 2 & 0\\
+3 & 0 & 2 - 2
+\end{bmatrix} &= \begin{bmatrix}
+-3 & -1 & 3\\
+-1 & 0 & 0\\
+3 & 0 & 0
+\end{bmatrix}.
+\end{align*}
+Thus, the vector 
+\begin{align*}
+y = \begin{bmatrix}
+0\\
+3\\
+1
+\end{bmatrix}
+\end{align*}
+is an eigenvector with corresponding eigenvalue 2. Normalizing, we have 
+\begin{align*}
+v_2 = \begin{bmatrix}
+0\\
+\frac{3}{\sqrt{10}}\\
+\frac{1}{\sqrt{10}}
+\end{bmatrix}.
+\end{align*}
+To find our last eigenvector, we will use the cross product, as we have done enough row reduction for a lifetime:
+\begin{align*}
+z &= \begin{vmatrix}
+i & j & k\\
+5 & -1 & 3\\
+0 & 3 & 1
+\end{vmatrix}\\
+&= i (-1 - 9) - 5 (j - 3k)\\
+&= -10i -5j + 15k.
+\end{align*}
+Normalizing, we have
+\begin{align*}
+v_3 = \begin{bmatrix}
+\frac{-2}{\sqrt{14}}\\
+\frac{-1}{\sqrt{14}}\\
+\frac{3}{\sqrt{14}}
+\end{bmatrix}.
+\end{align*}
+Now we find our $u_i$:
+\begin{align*}
+u_1 &= \frac{1}{\sigma_1} A v_1\\
+&= \frac{1}{\sqrt{7}} \begin{bmatrix}
+1 & 1 & 1\\
+2 & -1 & 1
+\end{bmatrix} \begin{bmatrix}
+\frac{5}{\sqrt{35}}\\
+\frac{-1}{\sqrt{35}}\\
+\frac{3}{\sqrt{35}}
+\end{bmatrix}\\
+&= \frac{1}{7 \sqrt{5}} \begin{bmatrix}
+1 & 1 & 1\\
+2 & -1 & 1
+\end{bmatrix} \begin{bmatrix}
+5\\
+-1\\
+3
+\end{bmatrix}\\
+&= \frac{1}{7 \sqrt{5}} \begin{bmatrix}
+7\\
+14
+\end{bmatrix}\\
+&= \begin{bmatrix}
+\frac{1}{\sqrt{5}}\\
+\frac{2}{\sqrt{5}}
+\end{bmatrix},
+\end{align*}
+and 
+\begin{align*}
+u_2 &= \frac{1}{2\sqrt{5}} \begin{bmatrix}
+1 & 1 & 1\\
+2 & -1 & 1
+\end{bmatrix} \begin{bmatrix}
+0\\
+3\\
+1
+\end{bmatrix}\\
+&= \frac{1}{\sqrt{5}} \begin{bmatrix}
+2\\
+-1
+\end{bmatrix}\\
+&= \begin{bmatrix}
+\frac{2}{\sqrt{5}}\\
+\frac{-1}{\sqrt{5}}
+\end{bmatrix}.
+\end{align*}
+Finally, we have
+\begin{align*}
+A^\dagger &= V \Sigma^\dagger U^*\\
+&= \begin{bmatrix}
+\frac{5}{\sqrt{35}} & 0 & \frac{-2}{\sqrt{14}}\\
+\frac{-1}{\sqrt{35}} & \frac{3}{\sqrt{10}} & \frac{-1}{\sqrt{14}}\\
+\frac{3}{\sqrt{35}} &  \frac{1}{\sqrt{10}} & \frac{3}{\sqrt{14}}
+\end{bmatrix} \begin{bmatrix}
+\frac{1}{\sqrt{7}} & 0\\
+0 & \frac{1}{\sqrt{2}}\\
+0 & 0.
+\end{bmatrix} \begin{bmatrix}
+\frac{1}{\sqrt{5}} & \frac{2}{\sqrt{5}}\\
+\frac{2}{\sqrt{5}} & \frac{-1}{\sqrt{5}}
+\end{bmatrix}.
+\end{align*}
+Thus, (assuming we somehow did not make a book keeping mistake) our least squares solution is given by
+\begin{align*}
+\begin{bmatrix}
+\frac{5}{\sqrt{35}} & 0 & \frac{-2}{\sqrt{14}}\\
+\frac{-1}{\sqrt{35}} & \frac{3}{\sqrt{10}} & \frac{-1}{\sqrt{14}}\\
+\frac{3}{\sqrt{35}} &  \frac{1}{\sqrt{10}} & \frac{3}{\sqrt{14}}
+\end{bmatrix} \begin{bmatrix}
+\frac{1}{\sqrt{7}} & 0\\
+0 & \frac{1}{\sqrt{2}}\\
+0 & 0.
+\end{bmatrix} \begin{bmatrix}
+\frac{1}{\sqrt{5}} & \frac{2}{\sqrt{5}}\\
+\frac{2}{\sqrt{5}} & \frac{-1}{\sqrt{5}}
+\end{bmatrix} \begin{bmatrix}
+5\\
+2
+\end{bmatrix} &= \frac{1}{7} \begin{bmatrix}
+9\\
+15\\
+11
+\end{bmatrix}.
+\end{align*}
+As a test, we can plug it in, and see how the result looks:
+\begin{align*}
+\frac{1}{7} \begin{bmatrix}
+1 & 1 & 1\\
+2 & -1 & 1
+\end{bmatrix} \begin{bmatrix}
+9\\
+15\\
+11
+\end{bmatrix} &= \begin{bmatrix}
+5\\
+2
+\end{bmatrix}.
+\end{align*}
+We have a solution, which is a very good sign we have done this correctly. *Breathes sigh of relief that this homework is finally over.*
+\end{document}
