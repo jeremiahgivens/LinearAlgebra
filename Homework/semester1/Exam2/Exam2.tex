@@ -1,0 +1,429 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\B}{\mathcal{B}}
+\DeclarePairedDelimiterX{\iprod}[1]{\langle}{\rangle}{#1}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Linear Algebra}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Exam 2}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+Show that every positive definite matrix must be invertible. Also show that if a matrix is positive definite, then it is unitary if and only if all of it's eigenvalues are 1.
+
+\subsection*{Solution}
+\begin{proof}
+Let $A$ be a positive definite $n \times n$. By definition, this matrix is hermitian, and therefore there exists an orthonormal basis $\beta = \{v_1, \cdots, v_n\}$ of our vector space consisting of eigenvectors of $A$, with corresponding eigenvalues $\lambda_i$. By  problem 2.a of HW2, we have that $\lambda_i > 0$ for all $i$. Let $x \in \mathbb{F}^n$ be nonzero. Then, there exist $a_i \in \mathbb{F}$, at least one of which is nonzero, such that 
+\begin{align*}
+x &= \sum_{i=1}^n a_i v_i.
+\end{align*}
+Then
+\begin{align*}
+Ax &= \sum_{i=1}^n a_i Av_i\\
+&= \sum_{i=1}^n a_i \lambda_i v_i.
+\end{align*}
+Since each $\lambda_i$ and at least one $a_i$ is nonzero, the linear independence of $\beta$ tells us that $Ax$ is nonzero. Thus, the dimension of the nullspace of $A$ is zero, and we can conclude that $A$ is invertible.
+
+Now, suppose $A$ is also unitary. Then, we have 
+\begin{align*}
+\iprod{Av_i, Av_i} &= \lambda_i^2\\
+&= \iprod{x,x} &&\text{Property of unitary operators}
+&= 1 && \text{Since our basis is orthonormal}.
+\end{align*}
+Thus, since $\lambda_i$ is real and nonnegative, we can conclude $\lambda_i = 1$ for each $i$.
+
+For the other direction, suppose $A$s eigenvalues are all $1$. Then, defining $x$ as we did above, we have
+\begin{align*}
+\iprod{Ax, Ax} &= \sum_{i=1}^n |a_i|^2 \lambda_i^2\\
+&= \sum_{i=1}^n |a_i|\\
+&= \iprod{x, x},
+\end{align*}
+and we have shown that $A$ is unitary.
+\end{proof}
+
+\section*{Problem 2}
+Use question 1 and the previous paragraph to solve the following generalized eigenvalue problem $Ax = \lambda B x$.
+\begin{align*}
+\begin{bmatrix}
+1 & 1\\
+0 & 1
+\end{bmatrix} x &= \lambda \begin{bmatrix}
+3 & -1\\
+-1 & 1
+\end{bmatrix} x
+\end{align*}
+
+\subsection*{Solution}
+Since $B$ has a nonzero determinant, we can see it is invertible. Thus, we will find it's inverse:
+\begin{align*}
+\begin{bmatrix}
+B & I
+\end{bmatrix} &= \begin{bmatrix}
+3 & -1 & 1 & 0\\
+-1 & 1 & 0 & 1
+\end{bmatrix}\\
+&\to \begin{bmatrix}
+1 & 1 & 1 & 2\\
+-1 & 1 & 0 & 1
+\end{bmatrix} && R_1 + 2R_2\\
+&\to \begin{bmatrix}
+1 & 1 & 1 & 2\\
+0 & 2 & 1 & 3
+\end{bmatrix} && R_2 + R_1\\
+&\to \begin{bmatrix}
+1 & 1 & 1 & 2\\
+0 & 1 & \frac{1}{2} & \frac{3}{2}
+\end{bmatrix} && \frac{1}{2}R_2\\
+&\to \begin{bmatrix}
+1 & 0 & \frac{1}{2} & \frac{1}{2}\\
+0 & 1 & \frac{1}{2} & \frac{3}{2}
+\end{bmatrix} && R_1 - R_2
+\end{align*}
+Thus, we have 
+\begin{align*}
+B^{-1} = \begin{bmatrix}
+\frac{1}{2} & \frac{1}{2}\\
+\frac{1}{2} & \frac{3}{2}
+\end{bmatrix}.
+\end{align*}
+Now we compute $B^{-1} A$:
+\begin{align*}
+B^{-1} A &= \begin{bmatrix}
+\frac{1}{2} & \frac{1}{2}\\
+\frac{1}{2} & \frac{3}{2}
+\end{bmatrix} \begin{bmatrix}
+1 & 1\\
+0 & 1
+\end{bmatrix}\\
+&= \begin{bmatrix}
+\frac{1}{2} & 1\\
+\frac{1}{2} & 2
+\end{bmatrix}.
+\end{align*}
+Our generalized eigenvalue problem reduces to finding the eigenvectors of this matrix:
+\begin{align*}
+|B^{-1} A - \lambda I| &= \begin{vmatrix}
+\frac{1}{2} - \lambda & 1\\
+\frac{1}{2} & 2 - \lambda
+\end{vmatrix}\\
+&= (\frac{1}{2} - \lambda)(2 - \lambda) - \frac{1}{2}\\
+&= \lambda^2 - \frac{5}{2} \lambda + \frac{1}{2}.
+\end{align*}
+From the quadratic formula, we have eigenvalues
+\begin{align*}
+\lambda_1 = \frac{1}{4}(5 - \sqrt{17}) \text{, and } \lambda_2 = \frac{1}{4}(5 + \sqrt{17}).
+\end{align*}
+Now we find our eigenvectors:
+\begin{align*}
+\begin{bmatrix}
+\frac{1}{2} - \lambda_1 & 1\\
+\frac{1}{2} & 2 - \lambda_1
+\end{bmatrix} &= \begin{bmatrix} \frac{1}{2} - \frac{1}{4}(5 - \sqrt{17}) & 1\\
+\frac{1}{2} & 2 - \frac{1}{4}(5 - \sqrt{17})
+\end{bmatrix}\\ 
+&= \begin{bmatrix} \frac{-3}{4} + \frac{1}{4}\sqrt{17} & 1\\
+\frac{1}{2} & 2 - \frac{1}{4}(5 - \sqrt{17})
+\end{bmatrix}.
+\end{align*}
+Thus, looking at the first row, we have an eigenvector
+\begin{align*}
+v_1 = \begin{bmatrix}
+4\\
+3 - \sqrt{17}
+\end{bmatrix}.
+\end{align*}
+For the next one, we follow the same procedure:
+\begin{align*}
+\begin{bmatrix}
+\frac{1}{2} - \lambda_2 & 1\\
+\frac{1}{2} & 2 - \lambda_2
+\end{bmatrix} &= \begin{bmatrix} \frac{1}{2} - \frac{1}{4}(5 + \sqrt{17}) & 1\\
+\frac{1}{2} & 2 - \frac{1}{4}(5 + \sqrt{17})
+\end{bmatrix}\\
+&= \begin{bmatrix} \frac{-3}{4} - \frac{1}{4}\sqrt{17} & 1\\
+\frac{1}{2} & 2 - \frac{1}{4}(5 - \sqrt{17})
+\end{bmatrix}.
+\end{align*}
+Again, the first row gives us the eigenvector
+\begin{align*}
+v_2 = \begin{bmatrix}
+4\\
+3 + \sqrt{17}
+\end{bmatrix},
+\end{align*}
+and we have solved the generalized eigenvalue problem.
+
+\section*{Problem 3}
+Solve the generalized eigenvalue problem from Question 2 using this second method.
+
+\subsection*{Solution}
+We have
+\begin{align*}
+|A - \lambda B| &= \left| \begin{bmatrix}
+1 & 1\\
+0 & 1
+\end{bmatrix} - \lambda \begin{bmatrix}
+3 & -1\\
+-1 & 1
+\end{bmatrix} \right|\\
+&= \left| \begin{bmatrix}
+1 & 1\\
+0 & 1
+\end{bmatrix} - \begin{bmatrix}
+3 \lambda & -\lambda\\
+-\lambda & \lambda
+\end{bmatrix} \right|\\
+&= \begin{vmatrix}
+1 - 3 \lambda & 1 + \lambda\\
+\lambda & 1 - \lambda
+\end{vmatrix}\\
+&= (1 - 3\lambda)(1-\lambda) -\lambda (1+\lambda)\\
+&= 3\lambda^2 - 4\lambda + 1 -\lambda - \lambda^2\\
+&= 2\lambda^2 - 5\lambda + 1\\
+&= 0\\
+0 &= \lambda^2 - \frac{5}{2} \lambda + \frac{1}{2}.
+\end{align*}
+As before, this is the same equation we had before (as it clearly should be), so we have eigenvalues 
+\begin{align*}
+\lambda_1 = \frac{1}{4}(5 - \sqrt{17}) \text{, and } \lambda_2 = \frac{1}{4}(5 + \sqrt{17}).
+\end{align*}
+Now we find the eigenvectors. First, we do a little reduction
+\begin{align*}
+\begin{bmatrix}
+1 - 3 \lambda & 1 + \lambda\\
+\lambda & 1 - \lambda
+\end{bmatrix} &\to \begin{bmatrix}
+1 - 2 \lambda & 2\\
+\lambda & 1 - \lambda
+\end{bmatrix} && R_1 + R_2\\
+&\to \begin{bmatrix}
+\frac{1}{2} - \lambda & 1\\
+\lambda & 1 - \lambda
+\end{bmatrix} && \frac{1}{2}R_1\\
+&\to \begin{bmatrix}
+\frac{1}{2} - \lambda & 1\\
+\frac{1}{2} & 2 - \lambda
+\end{bmatrix} && R_2 + R_1.
+\end{align*}
+We reduced this to the same matrix we had set equal to $B^{-1} A - \lambda I$ in problem 2. Since we have already shown the eigenvalues to be the same, we can conclude that the eigenvectors are the same (as they should be).
+
+\section*{Problem 4}
+For two $n \times n$ complex matrices $A$ and $B$, what is the maximum number of distinct generalized eigenvalues we would expect? Justify your answer. Then solve the generalized eigenvalue problem corresponding with the matrix pencil
+\begin{align*}
+\left( \begin{bmatrix}
+0 & 1\\
+0 & 0
+\end{bmatrix}, \begin{bmatrix}
+1 & 0\\
+0 & 0
+\end{bmatrix} \right).
+\end{align*}
+
+\subsection*{Solution}
+\begin{theorem}
+For two $n \times n$ complex matrices $A$ and $B$, the maximum number of distinct generalized eigenvalues is $n$.
+\end{theorem}
+
+\begin{proof}
+We claim that the determinant of $A - \lambda B$ is at most an $n^\text{th}$ degree polynomial of $\lambda$, from which the conclusion follows. We will proceed by induction on $n$. For $n = 2$, this is immediately clear. 
+
+Now, suppose for some $n \geq  2$ that for any two $n \times n$ complex matrices, the maximum number of distinct generalized eigenvalues is $n$. Let $A$ and $B$ be $n+1 \times n+1$ complex matrices. For an $m \times m$ matrix $C$, let $\overline{C}_{ij}$ denote the $m -1 \times m - 1$ submatrix of $C$ obtained by deleting the $i^\text{th}$ row and $j^\text{th}$ column of $C$. Then, we have
+\begin{align*}
+|A - \lambda B| &= \sum_{j = 1}^{n+1} (A_{1j} - \lambda B_{1j}) |\overline{A - \lambda B}_{1j}|.
+\end{align*}
+By the inductive hypothesis, $|\overline{A - \lambda B}_{1j}|$ is an at most $n \times n$ polynomial of $\lambda$. Since $(A_{1j} - \lambda B_{1j})$ is an at most first degree polynomial, we have that each term of the above sum is an at most $n+1^\text{th}$ degree polynomial, and we have completed our proof.
+\end{proof}
+
+Now, we solve the generalized eigenvalue problem:
+\begin{align*}
+|A - \lambda B| &= \begin{vmatrix}
+- \lambda & 1\\
+0 & 0
+\end{vmatrix}\\
+&= 0
+\end{align*}
+Thus, every nonzero vector is a generalized eigenvector with corresponding eigenvalue $0$.
+
+\section*{Problem 5}
+\begin{theorem}
+Let $\hat{E}_\lambda$ be the collection of all generalized eigenvectors associated with the eigenvalue $\lambda$. Then $\hat{E}_\lambda$ is a subspace of $V$.
+\end{theorem}
+
+\begin{proof}
+We have
+\begin{align*}
+\hat{E}_\lambda &= \{x \in V | (T - \lambda U)x = 0 \}.
+\end{align*}
+That is, $\hat{E}_\lambda$ is the nullspace of the linear operator $(T - \lambda U)$, and is therefore a subspace of $V$.
+\end{proof}
+
+\section*{Problem 6}
+For distinct generalized eigenvalues $\lambda$ and $\nu$ it is not necessarily the case that $\hat{E}_\lambda \cap \hat{E}_\nu = \{0\}$. Given a regular matrix pencil $(A,B)$ and distinct nonzero eigenvalues $\lambda \not = \nu$, what is $\hat{E}_\lambda \cap \hat{E}_\nu$?
+
+\subsection*{Solution}
+Let $x \in \hat{E}_\lambda \cap \hat{E}_\nu$. Then, we have
+\begin{align*}
+(A - \lambda B) x &= 0\\
+&= (A - \nu B)x\\
+0 &= (A - \lambda B) x - (A - \nu B)x\\
+&= Ax - \lambda B x - Ax + \nu B x\\
+&= (\nu - \lambda)Bx,
+\end{align*}
+and we can conclude that $x \in N(B)$. With this, we have
+\begin{align*}
+0 &= (A - \lambda B)x\\
+&= Ax - \lambda Bx\\
+&= Ax.
+\end{align*}
+Thus, we also have that $x \in N(A)$. Therefore, we have $x \in N(A) \cap N(B)$ which implies $\hat{E}_\lambda \cap \hat{E}_\nu \subseteq N(A) \cap N(B)$. Supposing that $x \in N(A) \cap N(B)$, it follows immediately that $x \in \hat{E}_\lambda \cap \hat{E}_\nu$. With this, we can conclude that $\hat{E}_\lambda \cap \hat{E}_\nu = N(A) \cap N(B)$.
+
+\section*{Problem 7} Let $V$ be an $n$-dimensional vector space over $\mathbb{C}$. Suppose that $P$ and $Q$ are two orthogonal projections. Suppose that $L = R(P)$, and $N = R(Q)$. Then we may write $L$ as
+\begin{align*}
+L = (L \cap N) \oplus (L \cap N^\perp).
+\end{align*}
+There is an equivalent decomposition for $L^\perp$. With these two decompositions we can write 
+\begin{align*}
+V = (L \cap N) \oplus (L \cap N^\perp) \oplus (L^\perp \cap N) \oplus (L^\perp \cap N^\perp)
+\end{align*}
+
+\subsection*{Solution}
+\begin{proof}
+Since $Q$ is an orthogonal projection, we have 
+\begin{align*}
+V = N \oplus N^\perp.
+\end{align*}
+Thus, we have 
+\begin{align*}
+x \in L \cap V &\iff x \in L \cap (N + N^\perp)\\
+&\iff x \in L \land x \in \{x_1 + x_2 | x_1 \in N \land x_2 \in N^\perp \}\\
+&\iff x \in \{x_1 + x_2 | x_1 \in L \cap N \land x_2 \in L \cap N^\perp \}\\
+&\iff x \in  (L \cap N) + L \cap N^\perp.
+\end{align*}
+Furthermore, we have
+\begin{align*}
+x \in  (L \cap N) \cap  (L \cap N^\perp) &\iff x \in L \cap (N \cap N^\perp)\\
+&\iff x \in L \cap \{0 \}  && \text{Since } Q \text{ is an orthogonal projection}\\
+&\iff x = 0.
+\end{align*}
+Thus, we have shown that 
+\begin{align*}
+L = (L \cap N) \oplus (L \cap N^\perp).
+\end{align*}
+In a nearly identical argument, we can derive the equality
+\begin{align*}
+L^\perp =  (L^\perp \cap N) \oplus (L^\perp \cap N^\perp).
+\end{align*}
+Since $P$ is an orthogonal projection, we have
+\begin{align*}
+V &= L \oplus L^\perp\\
+&= (L \cap N) \oplus (L \cap N^\perp) \oplus (L^\perp \cap N) \oplus (L^\perp \cap N^\perp),
+\end{align*}
+as desired.
+\end{proof}
+
+\section*{Problem 8}
+What happens to the decomposition in the first part of question 7 if we only assume that $Q$ is a projection, but not an orthogonal projection? Give a concrete example of such a projection onto a subspace of $\mathbb{C}^2$.
+
+Note for Dr. Bossaller: you wrote $P$ for this problem instead of $Q$, but I am pretty certain you meant $Q$.
+
+\subsection*{Solution}
+If $Q$ was not an orthogonal projection, then we would have $N^\perp \not = N(Q)$. Thus, we would not be able to say that $V = N \oplus N^\perp$, which means we could not say, in general, that $L = (L \cap N) \oplus (L \cap N^\perp)$.
+
+To see this, let $V = \mathbb{C}^2$, and consider the projection $Q$ onto $\text{Span}(1,1)$ given by 
+\begin{align*}
+Q (x_1, x_2) &= (x_1, x_1).
+\end{align*}
+Then, we have
+\begin{align*}
+\iprod{Qx, y} &= \iprod{(x_1, x_1), (y_1, y_2)}\\
+&= x_1 \overline{y_1} + x_1 \overline{y_2}\\
+&= x_1 (\overline{y_1} + \overline{y_2})\\
+&= x_1 \overline{(y_1 + y_2)}.
+\end{align*}
+From this, we can see that $N^\perp = \{(y, -y) | y \in \mathbb{C} \}$. Furthermore, we have
+\begin{align*}
+N(Q) &= \{(0, x)| x \in \mathbb{C} \}\\
+&\not = N^\perp.
+\end{align*}
+
+\end{document}
