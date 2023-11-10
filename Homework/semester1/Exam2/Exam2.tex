@@ -368,11 +368,11 @@ V = (L \cap N) \oplus (L \cap N^\perp) \oplus (L^\perp \cap N) \oplus (L^\perp \
 
 \subsection*{Solution}
 \begin{proof}
-Since $Q$ is an orthogonal projection, we have 
+By theorem 6.6 in our textbook, we have 
 \begin{align*}
-V = N \oplus N^\perp.
+V = N \oplus N^\perp,
 \end{align*}
-Thus, we have 
+since the range of $Q$ is a subspace of $V$. Thus, we have 
 \begin{align*}
 x \in L \cap V &\iff x \in L \cap (N + N^\perp)\\
 &\iff x \in L \land x \in \{x_1 + x_2 | x_1 \in N \land x_2 \in N^\perp \}\\
@@ -407,9 +407,13 @@ What happens to the decomposition in the first part of question 7 if we only ass
 Note for Dr. Bossaller: you wrote $P$ for this problem instead of $Q$, but I am pretty certain you meant $Q$.
 
 \subsection*{Solution}
-If $Q$ was not an orthogonal projection, then we would have $N^\perp \not = N(Q)$. Thus, we would not be able to say that $V = N \oplus N^\perp$, which means we could not say, in general, that $L = (L \cap N) \oplus (L \cap N^\perp)$.
+By theorem 6.6 in our textbook, we have $V = W \oplus W^\perp$ for any subspace of $W$ of $V$. If $Q$ was not an orthogonal projection, then we would still be able to write
+\begin{align*}
+V = N \oplus N^\perp,
+\end{align*}
+as $N$ would still be a subspace of $V$. In fact, this would be true if $Q$ were any operator on $V$, since the range of any operator is a subspace of $V$. The notable unique quality of orthogonal projections is that $R(Q)^\perp = N(Q)$, but the decomposition above does not explicitly use the null space of $Q$, thus the decomposition holds.
 
-To see this, let $V = \mathbb{C}^2$, and consider the projection $Q$ onto $\text{Span}(1,1)$ given by 
+To see a concrete example, let $V = \mathbb{C}^2$, and consider the projection $Q$ onto $\text{Span}(1,1)$ given by 
 \begin{align*}
 Q (x_1, x_2) &= (x_1, x_1).
 \end{align*}
@@ -420,10 +424,14 @@ Then, we have
 &= x_1 (\overline{y_1} + \overline{y_2})\\
 &= x_1 \overline{(y_1 + y_2)}.
 \end{align*}
-From this, we can see that $N^\perp = \{(y, -y) | y \in \mathbb{C} \}$. Furthermore, we have
+From this, we can see that $N^\perp = \{(y, -y) | y \in \mathbb{C} \} = \text{Span}(1, -1)$. Furthermore, we have
 \begin{align*}
-N(Q) &= \{(0, x)| x \in \mathbb{C} \}\\
-&\not = N^\perp.
+N(Q) &= \text{Span}(0, 1)\\
+&\not = N^\perp,
 \end{align*}
-
+which means the projection we have chosen is not orthogonal. Finally, we can see that $(1, -1)$ and $(0, 1)$ are linearly independent, and if follows that 
+\begin{align*}
+V = N \oplus N^\perp,
+\end{align*}
+as we expect.
 \end{document}
