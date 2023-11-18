@@ -1,0 +1,449 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\B}{\mathcal{B}}
+\DeclarePairedDelimiterX{\iprod}[1]{\langle}{\rangle}{#1}
+\DeclareMathOperator\rank{rank}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Linear Algebra}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 8}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+Let $T$ be a linear operator on a finite dimensional vector space $V$ with Jordan Canonical Form 
+\[\left[ 
+\begin{array}{ccc|cc|cc}
+2 &1 &0 &0 &0 &0 &0\\
+0 &2 &1 &0 &0 &0 &0\\
+0 &0 &2 &0 &0 &0 &0\\ \hline
+0 &0 &0 &2 &1 &0 &0\\
+0 &0 &0 &0 &2 &0 &0\\ \hline
+0 &0 &0 &0 &0 &3 &0\\
+0 &0 &0 &0 &0 &0 &3
+\end{array}
+\right]\]
+Answer the following questions
+    \begin{enumerate}
+    \item Find the characteristic polynomial of $T$
+    \item Find the dot diagram corresponding to each eigenvalue of $T$
+    \item For which eigenvalues $\lambda_i$, if any, does $E_{\lambda_i} = K_{\lambda_i}$
+    \item For each eigenvalue $\lambda_i$ find the smallest postive integer $p_i$ for which $K_{\lambda_i} = N((T_{\lambda_i} I)^{p_i})$
+    \item Compute the following numbers for each $i$ where $U_i$ denotes the restriction of $T-\lambda_i$ to $K_{\lambda_i}$
+        \begin{enumerate}
+        \item $\rank(U_i)$
+        \item $\rank(U_i^2)$
+        \item $\dim(N(U_i))$
+        \item $\dim(N(U_i^2))$
+        \end{enumerate}
+    \end{enumerate}
+    
+\subsection*{Solution}
+\begin{enumerate}
+\item The characteristic polynomial for $T$ is immediately obtainable from its Jordan Canonical Form:
+\begin{align*}
+f(t) = (2 - t)^5 (3 - \lambda)^2.
+\end{align*}
+
+\item For the eigenvalue $\lambda = 2$, we can see from our JCF of $T$ that we have one cycle of length $3$, and another cycle of length $2$. Thus, the dot diagram is
+\begin{align*}
+\begin{bmatrix}
+\bullet & \bullet\\
+\bullet & \bullet\\
+\bullet & 
+\end{bmatrix}.
+\end{align*}
+For the eigenvalue $\lambda = 3$, we have two cycles of length 1, so we have dot diagram
+\begin{align*}
+\begin{bmatrix}
+\bullet & \bullet
+\end{bmatrix}.
+\end{align*}
+
+\item For $\lambda_i = 3$ we have that $K_{\lambda_i} = E_{\lambda_i}$, as all of the vectors in $K_{\lambda_i}$ are eigenvalues of $T$.
+
+\item These can immediately be obtained from the dot diagrams. If we let $\lambda_1 = 2$, and $\lambda_2 = 3$, we have
+\begin{align*}
+p_1 = 3 \text{, and } p_2 = 1.
+\end{align*}
+
+\item \begin{enumerate}
+\item We have that $\rank(U_i)$ is equal to the number of dots in the dot diagram that are not the bottom dot for their column. Thus, we have
+\begin{align*}
+\rank(U_1) = 3 \text{, and } \rank(U_2) = 0.
+\end{align*}
+
+\item We have that $\rank(U_i^2)$ is equal to the number of dots in the dot diagram that are not in the bottom two dots for their column. Thus, 
+\begin{align*}
+\rank(U_1^2) = 1 \text{, and } \rank(U_2^2) = 0.
+\end{align*}
+
+\item The number of dots in the dot diagram is equal to the dimension of $K_{\lambda_i}$. Thus, using the rank nullity theorem, and our results from (a), we have
+\begin{align*}
+\dim N(U_1) = 5 - 3 = 2 \text{, and } \dim N(U_2) = 2 - 0 = 2.
+\end{align*}
+
+\item Using the results from part (b), we have
+\begin{align*}
+\dim N(U_1^2) = 5 - 1 = 4 \text{, and } \dim N(U_2^2) = 2 - 0 = 2.
+\end{align*}
+\end{enumerate}
+\end{enumerate}
+
+\section*{Problem 2}
+Find the Jordan Canonical Form for the following matrix.
+\[A = \begin{bmatrix}
+1 &0 &2 &2\\
+0 &1 &0 &0\\
+0 &2 &3 &-2\\
+0 &2 &2 &-1
+\end{bmatrix}\]
+
+\subsection*{Solution}
+We start by finding the finding the characteristic polynomial for $A$:
+\begin{align*}
+|A - t I| &= \begin{vmatrix}
+1 - t &0 &2 &2\\
+0 &1 - t &0 &0\\
+0 &2 &3 - t &-2\\
+0 &2 &2 &-1 - t
+\end{vmatrix}\\
+&= (1 - t)^2 (-(3-t)(1+t) + 4)\\
+&= (1 - t)^2(t^2 - 2t + 1)\\
+&= (1-t)^4.
+\end{align*}
+Thus, we have one unique eigenvalue, $\lambda = 1$. Since this eigenvalue has multiplicity 4, we have $\dim (K_1) = 4$. We will now find the dot diagram, but finding how many dots go in each row:
+\begin{align*}
+r_1 &= \dim(V) - \rank (A - \lambda I)\\
+&= 4 - \rank \left( \begin{bmatrix}
+0 &0 &2 &2\\
+0 &0 &0 &0\\
+0 &2 &2 &-2\\
+0 &2 &2 &-2
+\end{bmatrix} \right)\\
+&= 4 - \rank \left( \begin{bmatrix}
+0 &2 &2 &-2\\
+0 &0 &2 &2\\
+0 &0 &0 & 0\\
+0 &0 &0 & 0
+\end{bmatrix} \right)\\
+&= 4 - 2\\
+&= 2
+\end{align*}
+
+Now, to find the number of dots in the second row, we will need to square $A - \lambda I$:
+\begin{align*}
+(A - \lambda I)^2 &= \begin{bmatrix}
+0 &0 &2 &2\\
+0 &0 &0 &0\\
+0 &2 &2 &-2\\
+0 &2 &2 &-2
+\end{bmatrix}^2\\
+&= \begin{bmatrix}
+0 &0 &2 &2\\
+0 &0 &0 &0\\
+0 &2 &2 &-2\\
+0 &2 &2 &-2
+\end{bmatrix} \begin{bmatrix}
+0 &0 &2 &2\\
+0 &0 &0 &0\\
+0 &2 &2 &-2\\
+0 &2 &2 &-2
+\end{bmatrix}\\
+&= \begin{bmatrix}
+0 &8 &8 &-8\\
+0 &0 &0 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &0
+\end{bmatrix}.
+\end{align*}
+Thus, we have
+\begin{align*}
+r_2 &= r_1 - \rank (A - \lambda I)^2\\
+&= 2 - 1\\
+&= 1.
+\end{align*}
+Since the number of dots must equal the multiplicity of $\lambda$, we have $r_3 = 1$. Thus, the dot diagram is
+\begin{align*}
+\begin{bmatrix}
+\bullet & \bullet\\
+\bullet & \\
+\bullet & 
+\end{bmatrix}.
+\end{align*}
+With this, we can see that the JCF of $A$ is 
+\begin{align*}
+\begin{bmatrix}
+1 &1 &0 &0\\
+0 &1 &1 &0\\
+0 &0 &1 &0\\
+0 &0 &0 &1
+\end{bmatrix}
+\end{align*}
+
+\section*{Problem 3}
+Suppose that $V$ is the real vector space of functions spanned by the set of real-valued functions $\beta_0 = \{e^t, te^t, t^2e^t, e^{2t}\}$. Suppose that $T$ is the linear operator on $V$ defined by $T(f) = f'$. Find a Jordan Canonical Form $J$ of $T$ and a Jordan basis $\beta$ of generalized eigenvectors for $V$.
+
+\subsection*{Solution}
+We will start by expressing $T$ as a matrix in this given basis. We have
+\begin{align*}
+Te^t &= e^t\\
+Tte^t &= e^t + te^t\\
+Tt^2e^t &= 2te^t + t^2 e^t\\
+Te^{2t} &= 2 e^{2t}.
+\end{align*}
+Thus, we have
+\begin{align*}
+[T]_{\beta_0} = \begin{bmatrix}
+1 &1 &0 &0\\
+0 &1 &2 &0\\
+0 &0 &1 &0\\
+0 &0 &0 &2
+\end{bmatrix}.
+\end{align*}
+
+Now, we will find the characteristic polynomial:
+\begin{align*}
+|T - t I| &= \begin{vmatrix}
+1 - t &1 &0 &0\\
+0 &1 - t &2 &0\\
+0 &0 &1 - t &0\\
+0 &0 &0 &2 - t
+\end{vmatrix}\\
+&= (1-t)^3 (2 - t).
+\end{align*}
+Thus, we have two unique eigenvalues $\lambda_1 = 1$ and $\lambda_2 = 2$ with respective multiplicities $3$ and $1$. Now we will find matrix form of $T - \lambda_1 I$:
+\begin{align*}
+T - \lambda_1 I &= \begin{bmatrix}
+1 - \lambda_1 &1 &0 &0\\
+0 &1 - \lambda_1 &2 &0\\
+0 &0 &1 - \lambda_1 &0\\
+0 &0 &0 &2 - \lambda_1
+\end{bmatrix}\\
+&= \begin{bmatrix}
+0 &1 &0 &0\\
+0 &0 &2 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &1
+\end{bmatrix}.
+\end{align*}
+This has rank 3, which means that there is only 1 dot in the first row of our dot diagram, which means we can conclude that the dot diagram corresponding to $\lambda_1$ is
+\begin{align*}
+\begin{bmatrix}
+\bullet\\
+\bullet\\
+\bullet
+\end{bmatrix}.
+\end{align*}
+The dot diagram for $\lambda_2$ is trivial, thus we can conclude that a JCF of $T$ is
+\begin{align*}
+\begin{bmatrix}
+1 &1 &0 &0\\
+0 &1 &1 &0\\
+0 &0 &1 &0\\
+0 &0 &0 &2
+\end{bmatrix}
+\end{align*}
+
+Now, we will find the nullspace of $(T - \lambda_1 I)^2$. We have
+\begin{align*}
+\begin{bmatrix}
+0 &1 &0 &0\\
+0 &0 &2 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &1
+\end{bmatrix}^2 &= \begin{bmatrix}
+0 &1 &0 &0\\
+0 &0 &2 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &1
+\end{bmatrix} \begin{bmatrix}
+0 &1 &0 &0\\
+0 &0 &2 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &1
+\end{bmatrix}\\
+&= \begin{bmatrix}
+0 &0 &2 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &1
+\end{bmatrix}.
+\end{align*}
+Thus, the a basis for this null space is 
+\begin{align*}
+\left\{\begin{bmatrix}
+1\\
+0\\
+0\\
+0
+\end{bmatrix}, \begin{bmatrix}
+0\\
+1\\
+0\\
+0
+\end{bmatrix} \right\}.
+\end{align*}
+Now we find the null space for $(T - \lambda_1 I)^3$:
+\begin{align*}
+\begin{bmatrix}
+0 &1 &0 &0\\
+0 &0 &2 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &1
+\end{bmatrix}^3 &= \begin{bmatrix}
+0 &1 &0 &0\\
+0 &0 &2 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &1
+\end{bmatrix} \begin{bmatrix}
+0 &0 &2 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &1
+\end{bmatrix}\\
+&= \begin{bmatrix}
+0 &0 &0 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &0\\
+0 &0 &0 &1
+\end{bmatrix}.
+\end{align*}
+Thus, we see that a basis for this null space is
+\begin{align*}
+\left\{\begin{bmatrix}
+1\\
+0\\
+0\\
+0
+\end{bmatrix}, \begin{bmatrix}
+0\\
+1\\
+0\\
+0
+\end{bmatrix},
+\begin{bmatrix}
+0\\
+0\\
+1\\
+0
+\end{bmatrix}\right\}.
+\end{align*}
+
+Now, we want the one vector that is not in the nullspace of $(T - \lambda I)^2$, so we know we want the third one. Call this vector $v_3$. We can use this to find the next vector in our basis that will put $T$ in JCF:
+\begin{align*}
+v_2 &= (T - \lambda I)v_3\\
+&= Tt^2e^t - t^2e^t\\
+&= 2te^t + t^2e^t - t^2 e^t\\
+&= 2te^t.
+\end{align*}
+Finally, we use this to get the eigenvector:
+\begin{align*}
+v_1 &= (T - \lambda I)v_2\\
+&= 2Tte^t - 2te^T\\
+&= 2e^t + 2te^t - 2te^t\\
+&= 2e^t.
+\end{align*}
+Putting it all together, our basis for putting $T$ into JCF is 
+\begin{align*}
+\beta = \{t^2e^t, 2te^t, 2e^t, e^{2t}\}.
+\end{align*}
+
+As a sanity check, we will express $T$ in this basis. First, we see
+\begin{align*}
+Tt^2 e^t &= t^2e^t + 2te^t\\
+T2te^t &= 2te^t + 2e^t\\
+T2e^t &= 2e^t\\
+T2e^{2t} &= 2e^{2t}.
+\end{align*}
+With this, we can see
+\begin{align*}
+[T]_\beta = \begin{bmatrix}
+1 &1 &0 &0\\
+0 &1 &1 &0\\
+0 &0 &1 &0\\
+0 &0 &0 &2
+\end{bmatrix},
+\end{align*}
+as desired.
+
+\end{document}
